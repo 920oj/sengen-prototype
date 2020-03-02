@@ -14,6 +14,8 @@ module.exports = {
 			{ hid: 'description', name: 'description', content: process.env.npm_package_description || '' }
 		],
 		link: [
+			{ rel: 'stylesheet', href: 'https://fonts.googleapis.com/css?family=Roboto:400,900&display=swap'},
+			{ rel: 'stylesheet', href: 'https://fonts.googleapis.com/css?family=Noto+Sans+JP:400,900&display=swap'},
 			{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
 		]
 	},
