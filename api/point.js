@@ -8,12 +8,12 @@ app.use(bodyParser.urlencoded({extended: false}));
 const User = database.user;
 
 //ポイント購入
-app.post('/point/purchase/:price', function(req, res, next) {
+app.post('/point/purchase/.+', function(req, res, next) {
     
 })
 
 //ポイント交換
-app.post('/point/exchange/:giftcard', function(req, res, next) {
+app.post('/point/exchange/.+', function(req, res, next) {
 
 })
 

@@ -13,7 +13,7 @@ app.post('users', function(req, res, next) {
 });
 
 //ログイン
-app.post('users/:user/login', function(req, res, next) {
+app.post('users/.+/login', function(req, res, next) {
     mapState(['user']);
 
     mapGetters([isAuthenticated]);
@@ -31,7 +31,7 @@ app.post('users/:user/login', function(req, res, next) {
 });
 
 //ログアウト
-app.post('logout/:user/logout', function(req, res, next) {
+app.post('logout/.+/logout', function(req, res, next) {
     mapAction(['setUser']);
     firebase.auth().signOut()
     .then(() => {

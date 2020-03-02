@@ -13,12 +13,12 @@ app.get('/declarations', function(req, res, next) {
 });
 
 //検索
-app.post('/search/:keyword', function(req, res, next) {
+app.post('/search/.+', function(req, res, next) {
 
 });
 
 //カテゴリー
-app.post('/category/:category', function(req, res, next) {
+app.post('/category/.+', function(req, res, next) {
 
 })
 

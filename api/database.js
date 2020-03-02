@@ -21,12 +21,10 @@ let Declaration = new Schema({
     declarer: {
         uid: Number
     },
-    supprters: {
+    supporters: {
         uid: Number
     },
-    tags: {
-        tag: Number
-    }
+    tag: Number
 });
 
 let Category = new Schema({
