@@ -7,18 +7,13 @@ app.use(bodyParser.urlencoded({extended: false}));
 
 const User = database.user;
 
-//トップ
-app.get('/declarations', function(req, res, next) {
-    res.end('疎通確認');
-});
+//ポイント購入
+app.post('/point/purchase/:price', function(req, res, next) {
+    
+})
 
-//検索
-app.post('/search/:keyword', function(req, res, next) {
-
-});
-
-//カテゴリー
-app.post('/category/:category', function(req, res, next) {
+//ポイント交換
+app.post('/point/exchange/:giftcard', function(req, res, next) {
 
 })
 
