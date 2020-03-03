@@ -5,7 +5,7 @@ const database = require('./database.js');
 
 app.use(bodyParser.urlencoded({extended: false}));
 
-const User = database.user;
+const User = database.User;
 
 //ポイント確認
 app.get('users/.+/check', function(req, res, next) {

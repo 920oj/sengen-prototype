@@ -5,7 +5,7 @@ const database = require('./database.js');
 
 app.use(bodyParser.urlencoded({extended: false}));
 
-const User = database.user;
+const User = database.User;
 
 //ポイント購入
 app.post('/point/purchase/.+', function(req, res, next) {

@@ -5,7 +5,7 @@ const database = require('./database.js');
 
 app.use(bodyParser.urlencoded({extended: false}));
 
-const User = database.user;
+const User = database.User;
 
 //新規登録
 app.post('users', function(req, res, next) {
