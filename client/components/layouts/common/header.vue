@@ -23,7 +23,6 @@ export default {
   width: 100%;
   height: 60px;
   margin: 0;
-  position: fixed;
 }
 
 .header {
