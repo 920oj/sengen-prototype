@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 let User = new Schema({
+    //uid: JWT tokenに含まれるuser_idを使用
     uid: Number,
     name: String,
     mail: String,

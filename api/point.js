@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+const router = express.Router();
 const bodyParser = require('body-parser');
 const database = require('./database.js');
 
@@ -8,16 +9,13 @@ app.use(bodyParser.urlencoded({extended: false}));
 const User = database.User;
 
 //ポイント購入
-app.post('/point/purchase/.+', function(req, res, next) {
+router.post('/point/purchase/:price', function(req, res, next) {
     
 })
 
 //ポイント交換
-app.post('/point/exchange/.+', function(req, res, next) {
+router.post('/point/exchange/:giftcard', function(req, res, next) {
 
 })
 
-module.exports = {
-    path: "/api/",
-    handler: app
-};
+module.exports = router
