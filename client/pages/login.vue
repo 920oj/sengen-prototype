@@ -44,7 +44,8 @@ export default {
   },
   mounted() {
     firebase.auth().onAuthStateChanged((user) => {
-        this.setUser(user)
+        const { uid, email, displayName } = user
+        this.getUser({ uid, email, displayName })
     })
   },
   computed: {
@@ -58,7 +59,7 @@ export default {
       // ここにログインのAPIのを叩く処理を書く
       firebase.auth().signInWithEmailAndPassword(this.mail, this.password)
         .then(user => {
-            this.$router.push("/")
+          this.$router.push("/")
         }).catch((error) => {
             console.log(error);
         });

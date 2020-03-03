@@ -11,11 +11,14 @@ const User = database.User;
 //新規登録
 router.post('/users', function(req, res, next) {
     let newName = req.body.name,
-        newMail = req.body.email;
-        //localstorageからJWT tokenのuser_idを取得
-        // newUid = localStorage.
+        newMail = req.body.email,
+        
+        // localstorageからuidを取得
+        localUserData = JSON.parse(localStorage.vuex),
+        newUid = localUserData.auth.login.user.uid;
+
     let newUser = new User({
-        // uid: newUid,
+        uid: newUid,
         name: newName,
         mail: newMail,
         point: 0,
@@ -36,9 +39,9 @@ router.post('/users', function(req, res, next) {
 
 
 //ログイン
-router.post('/users/.+/login', function(req, res, next) {
+// router.post('/users/.+/login', function(req, res, next) {
 
-});
+// });
 
 //ログアウト
 router.post('/logout/.+/logout', function(req, res, next) {
