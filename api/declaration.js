@@ -17,7 +17,7 @@ let dataCheck = (collection) => {
 };
 
 //新規宣言作成
-app.post('/declarations', function(req, res, next) {
+router.post('/declarations', function(req, res, next) {
     let declarationTitle = req.body.declarationTitle,
         hasp = req.body.hasp,
         // 仮置き storeの値取得方法を確認してから修正
@@ -42,7 +42,7 @@ app.post('/declarations', function(req, res, next) {
 });
 
 //宣言詳細取得
-app.get('/declarations/.+', function(req, res, next) {
+router.get('/declarations/.+', function(req, res, next) {
     Declaration.findOne({ _id: '宣言の_id'}, function(err, result) {
         if(err) {
             console.log(err);
@@ -52,7 +52,7 @@ app.get('/declarations/.+', function(req, res, next) {
 });
 
 //宣言編集
-app.put('/declarations/.+', function(req, res, next) {
+router.put('/declarations/.+', function(req, res, next) {
     let declarationTitle = req.body.declarationTitle,
         hasp = req.body.hasp,
         // 仮置き storeの値取得方法を確認してから修正
@@ -78,7 +78,7 @@ app.put('/declarations/.+', function(req, res, next) {
 });
 
 //応援メッセージ取得
-app.post('/declarations/.+/support/message', function(req, res, next) {
+router.post('/declarations/.+/support/message', function(req, res, next) {
     Declaration.findOne({ _id: this.$store.state.user._id})
         .populate('supporters')
         .exec( function(err, result) {
@@ -90,7 +90,7 @@ app.post('/declarations/.+/support/message', function(req, res, next) {
 });
 
 //応援ボタン押下
-app.post('/declarations/.+/support', function(req, res, next) {
+router.post('/declarations/.+/support', function(req, res, next) {
 
 });
 
@@ -134,12 +134,6 @@ router.get('/test', function(req, res, next) {
             res.send('OK');
         });
     });
-    
-    
-    
-    
-    
-    
 })
 
 module.exports = router
