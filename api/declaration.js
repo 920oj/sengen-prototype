@@ -20,15 +20,15 @@ let dataCheck = (collection) => {
 router.post('/declarations', function(req, res, next) {
     let declarationTitle = req.body.declarationTitle,
         hasp = req.body.hasp,
-        // 仮置き storeの値取得方法を確認してから修正
-        // declarer = this.$store.state.user._id,
+        localUserData = JSON.parse(localStorage.vuex),
+        userUid = localUserData.auth.login.user.uid,
         tag = req.body.tag;
 
     let newDeclaration = new Declaration({
         index: User.find({}).count() - 1,
         name: declarationTitle,
         hasp: hasp,
-        declarer: {},
+        declarer: userUid,
         supporter: [],
         tag: tag
     });
