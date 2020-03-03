@@ -21,7 +21,7 @@ export default {
 
 .header-container {
   width: 100%;
-  height: 60px;
+  height: 80px;
   margin: 0;
 }
 
@@ -29,9 +29,14 @@ export default {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 60px;
+  height: 80px;
+  width: 100%;
+  box-sizing: border-box;
 
   padding: 0 15px;
+  position: fixed;
+  top: 0;
+  left: 0;
 
   color: #fff;
   background: #F27435;
