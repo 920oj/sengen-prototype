@@ -43,7 +43,7 @@ ul {
   list-style: none;
 }
 li{
-    padding-bottom: 25px;
+  padding-bottom: 25px;
 }
 .footer-about,
 .footer-contact,
@@ -56,7 +56,7 @@ li{
   padding-bottom: 25px;
 }
 .footer-menu{
-    display:flex;
+  display:flex;
 }
 .footer-container-left {
   padding: 15px 0 15px 0;
@@ -67,7 +67,7 @@ li{
   font-size: 1rem;
 }
 .copy-right{
-    text-align: center;
-    font-size: 0.8rem;
+  text-align: center;
+  font-size: 0.8rem;
 }
 </style>
