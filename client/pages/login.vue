@@ -2,13 +2,12 @@
   <div class="login">
     <div class="login-wrapper">
       <h2>ログイン</h2>
-      <form action="/login" method="POST">
         <div class="login-mail">
           <div class="form-icon-wrapper">
             <img src="~/assets/img/icon/envelope.svg" alt="メールアドレス" class="form-icon">
           </div>
           <div class="form-wrapper">
-            <input type="mail" name="mail" id="form-mail" placeholder="メールアドレス" required>
+            <input type="mail" name="mail" id="form-mail" v-model="mail" placeholder="メールアドレス" required>
           </div>
         </div>
         <div class="login-password">
@@ -16,11 +15,12 @@
             <img src="~/assets/img/icon/lock.svg" alt="パスワード" class="form-icon" style="width: 60%;">
           </div>
           <div class="form-wrapper">
-            <input type="password" name="password" id="form-password" placeholder="パスワード" required>
+            <input type="password" name="password" id="form-password" v-model="password" placeholder="パスワード" required>
           </div>
         </div>
-        <btnWithIcon title="ログイン" icon="img/icon/sign-in-alt.svg" />
-      </form>
+        <div class="form-submit-btn" @click="submitLogin()">
+          <btnWithIcon title="ログイン" icon="img/icon/sign-in-alt.svg" />
+        </div>
       <p class="login-forgot-password">パスワードを忘れた方はこちら</p>
     </div>    
   </div>
@@ -33,6 +33,18 @@ import btnWithIcon from '~/components/ui/btn/btnWithIcon.vue';
 export default {
   components: {
     btnWithIcon,
+  },
+  data() {
+    return {
+      'mail': '',
+      'password': ''
+    }
+  },
+  methods: {
+    submitLogin: function() {
+      //ここにバリデーションの処理を書く
+      // ここにログインのAPIのを叩く処理を書く
+    }
   }
 }
 </script>
