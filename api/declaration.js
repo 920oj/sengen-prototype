@@ -5,8 +5,8 @@ const database = require('./database.js');
 
 app.use(bodyParser.urlencoded({extended: false}));
 
-const User = database.user;
-const Declaration = database.declaration;
+const User = database.User;
+const Declaration = database.Declaration;
 
 //新規宣言作成
 app.post('/declarations', function(req, res, next) {
