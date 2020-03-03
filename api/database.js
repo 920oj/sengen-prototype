@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 let User = new Schema({
-    _id: Number,
+    uid: Number,
     name: String,
     mail: String,
     point: Number,
@@ -11,7 +11,7 @@ let User = new Schema({
 });
 
 let Declaration = new Schema({
-    _id: Number,
+    uid: Number,
     name: String,
     hasp: Number,
     declarer: { type: Schema.Types.ObjectId, ref: 'User' },
@@ -23,7 +23,7 @@ let Declaration = new Schema({
 });
 
 let Category = new Schema({
-    _id: Number,
+    uid: Number,
     name: String,
     declarations: [{ type: Number, ref: 'Declaration' }]
 });

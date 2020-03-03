@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+const router = express.Router();
 const bodyParser = require('body-parser');
 const database = require('./database.js');
 
@@ -7,6 +8,13 @@ app.use(bodyParser.urlencoded({extended: false}));
 
 const User = database.User;
 const Declaration = database.Declaration;
+
+let dataCheck = (collection) => {
+    collection.find({}, function(err, result) {
+        console.log('全要素 : ' + result);
+        console.log('要素数 : ' + Object.keys(result).length);
+    });
+};
 
 //新規宣言作成
 app.post('/declarations', function(req, res, next) {
@@ -87,30 +95,51 @@ app.post('/declarations/.+/support', function(req, res, next) {
 });
 
 //サンプルデータ取得用
-app.get('/test', function(req, res, next) {
-    let declarationTitle = 'サンプルプロジェクト',
-        hasp = 1000,
-        declarer = 'コットン',
-        tag = 'nuxt'
+router.get('/test', function(req, res, next) {
+    let userName = 'コットン',
+        mail = 'chinoknct@gmail.com';
 
-    let newDeclaration = new Declaration({
-        index: User.find({}).count() - 1,
-        name: declarationTitle,
-        hasp: hasp,
-        declarer: declarer,
-        supporter: [],
-        tag: tag
+    let newUser = new User({
+        // _id: User.find({}).count() - 1,
+        uid: 0,
+        name: userName,
+        mail: mail,
+        point: 0,
+        declarations: [],
+        supports: []
     });
 
-    newDeclaration.save(function(err) {
-        if(err) {
-            console.log(err);
-        }
-        res.send();
+    dataCheck(User);
+    
+    newUser.save(function(err) {})
+    Declaration.find({}, function(err, result) {
+        let declarationLength = Object.keys(result).length,
+        declarationTitle = 'サンプルプロジェクト',
+        hasp = 1000;
+        
+        let newDeclaration = new Declaration({
+            uid: declarationLength,
+            name: declarationTitle,
+            hasp: hasp,
+            declarer: newUser._id,
+            supporter: [],
+            tag: 0
+        });
+        
+        newDeclaration.save(function(err) {
+            if(err) {
+                console.log(err);
+            }
+            dataCheck(Declaration);
+            res.send('OK');
+        });
     });
+    
+    
+    
+    
+    
+    
 })
 
-module.exports = {
-    path: "/api/",
-    handler: app
-};
+module.exports = router

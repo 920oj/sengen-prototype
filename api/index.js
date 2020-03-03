@@ -7,6 +7,9 @@ app.use(bodyParser.urlencoded({extended: false}));
 
 const User = database.User;
 
+let declaration = require('./declaration')
+app.use('/', declaration);
+
 //トップ
 app.get('/declarations', function(req, res, next) {
     let declarationCurrentLength = Declaration.find({}).count();
