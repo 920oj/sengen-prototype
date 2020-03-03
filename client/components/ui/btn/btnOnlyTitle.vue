@@ -26,4 +26,8 @@ export default {
   border-radius: 10px;
   cursor: pointer;
 }
+
+.btn-only-title p {
+  font-weight: 900;
+}
 </style>

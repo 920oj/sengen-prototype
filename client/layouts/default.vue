@@ -29,6 +29,7 @@ export default {
 <style>
 body {
   font-family: 'Roboto', 'Noto Sans JP';
-  
+  width: 100%;
+  background-color: #F3F4F9;
 }
 </style>
