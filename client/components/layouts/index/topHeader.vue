@@ -6,7 +6,7 @@
         <img src="~/assets/img/sengen-logo.svg" alt="Sengen.jp" class="top-header-logo">
       </div>
       <div class="top-header-right">
-
+        <btnOnlyTitle title="ログイン" />
       </div>
     </div>
 
@@ -23,10 +23,12 @@
 
 <script>
 import btnWithIcon from '~/components/ui/btn/btnWithIcon.vue';
+import btnOnlyTitle from '~/components/ui/btn/btnOnlyTitle.vue';
 
 export default {
   components: {
     btnWithIcon,
+    btnOnlyTitle,
   }
 }
 </script>
@@ -41,9 +43,9 @@ export default {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 60px;
+  height: 80px;
 
-  padding: 0 15px;
+  padding: 0 30px;
 
   color: #fff;
   background: #F27435;
@@ -57,7 +59,7 @@ export default {
 .top-header-catch {
   background: #F27435;
   color: #fff;
-  padding: 0 20px;
+  padding: 0 30px;
 }
 
 .top-header-catch h2 {
