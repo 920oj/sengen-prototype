@@ -33,6 +33,7 @@ module.exports = {
 	** Plugins to load before mounting the App
 	*/
 	plugins: [
+		"~plugins/persistedstate",
 	],
 	/*
 	** Nuxt.js dev-modules
@@ -60,6 +61,20 @@ module.exports = {
 		** You can extend webpack config here
 		*/
 		extend (config, ctx) {
+		},
+
+		babel: {
+			presets({ isServer }) {
+				return [
+					[
+					require.resolve('@nuxt/babel-preset-app'),
+					{
+						buildTarget: isServer ? 'server' : 'client',
+						corejs: { version: 3 }
+					}
+					]	
+				]
+			}
 		}
 	}
 }
