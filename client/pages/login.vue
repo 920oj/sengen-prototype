@@ -28,7 +28,9 @@
 
 <script>
 
-import btnWithIcon from '~/components/ui/btn/btnWithIcon.vue';
+import btnWithIcon from '~/components/ui/btn/btnWithIcon.vue'
+import firebase from '~/plugins/firebase'
+import { mapActions, mapState, mapGetters } from 'vuex'
 
 export default {
   components: {
@@ -40,11 +42,27 @@ export default {
       'password': ''
     }
   },
+  mounted() {
+    firebase.auth().onAuthStateChanged((user) => {
+        this.setUser(user)
+    })
+  },
+  computed: {
+    ...mapState('auth/login', ['user']),
+    ...mapGetters('auth/login', ['isAuthenticated'])
+  },
   methods: {
+    ...mapActions('auth/login', ['getUser']),
     submitLogin: function() {
       //ここにバリデーションの処理を書く
       // ここにログインのAPIのを叩く処理を書く
-    }
+      firebase.auth().signInWithEmailAndPassword(this.mail, this.password)
+        .then(user => {
+            this.$router.push("/")
+        }).catch((error) => {
+            console.log(error);
+        });
+      }
   }
 }
 </script>
