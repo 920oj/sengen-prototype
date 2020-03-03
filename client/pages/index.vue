@@ -5,10 +5,14 @@
 </template>
 
 <script>
-
+import Header from '~components/layouts/index/topHeader.vue';
 
 export default {
-  
+  layout: 'onlyFooter',
+  components: {
+    Header,
+    Footer,
+  }
 }
 </script>
 
