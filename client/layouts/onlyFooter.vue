@@ -13,10 +13,12 @@
 </template>
 
 <script>
-import Footer from '~components/layouts/common/footer.vue';
+import Header from '~/components/layouts/common/header.vue'
+import Footer from '~/components/layouts/common/footer.vue';
 
 export default {
   components: {
+    Header,
     Footer,
   }
 
@@ -26,6 +28,6 @@ export default {
 <style>
 body {
   font-family: 'Roboto', 'Noto Sans JP';
-  
+  width: 100%;
 }
 </style>

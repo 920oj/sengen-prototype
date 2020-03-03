@@ -1,17 +1,16 @@
 <template>
   <div class="index">
-
+    <Header />
   </div>
 </template>
 
 <script>
-import Header from '~components/layouts/index/topHeader.vue';
+import Header from '~/components/layouts/index/topHeader.vue';
 
 export default {
   layout: 'onlyFooter',
   components: {
     Header,
-    Footer,
   }
 }
 </script>
