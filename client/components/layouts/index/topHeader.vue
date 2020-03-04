@@ -6,7 +6,12 @@
         <img src="~/assets/img/sengen-logo.svg" alt="Sengen.jp" class="top-header-logo">
       </div>
       <div class="top-header-right">
-        <btnOnlyTitle title="ログイン" />
+        <div v-if="isAuthenticated">
+          <btnOnlyTitle title="マイページ" />
+        </div>
+        <div v-if="!isAuthenticated">
+          <btnOnlyTitle title="ログイン" />
+        </div>
       </div>
     </div>
 
@@ -22,13 +27,17 @@
 </template>
 
 <script>
-import btnWithIcon from '~/components/ui/btn/btnWithIcon.vue';
-import btnOnlyTitle from '~/components/ui/btn/btnOnlyTitle.vue';
+import btnWithIcon from '~/components/ui/btn/btnWithIcon.vue'
+import btnOnlyTitle from '~/components/ui/btn/btnOnlyTitle.vue'
+import { mapActions, mapState, mapGetters } from 'vuex'
 
 export default {
   components: {
     btnWithIcon,
     btnOnlyTitle,
+  },
+  computed: {
+    ...mapGetters('auth/login', ['isAuthenticated'])
   }
 }
 </script>
