@@ -50,7 +50,13 @@ export default {
   },
   computed: {
     ...mapState('auth/login', ['user']),
-    ...mapGetters('auth/login', ['isAuthenticated'])
+    ...mapGetters('auth/login', ['isAuthenticated']),
+    
+    judgeLogin: function() {
+      if(this.isAuthenticated) {
+        this.$router.push("/")
+      }
+    }
   },
   methods: {
     ...mapActions('auth/login', ['getUser']),
