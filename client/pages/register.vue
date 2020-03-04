@@ -36,6 +36,9 @@
 <script>
 
 import btnWithIcon from '~/components/ui/btn/btnWithIcon.vue'
+import firebase from '~/plugins/firebase.js'
+import { mapActions, mapState, mapGetters } from 'vuex'
+import querystring from 'querystring'
 
 export default {
   components: {
@@ -46,12 +49,49 @@ export default {
       'username': '',
       'mail': '',
       'password': '',
+      'uid': ''
     }
   },
+  mounted() {
+    firebase.auth().onAuthStateChanged((user) => {
+        const { uid, email, displayName } = user
+        this.getUser({ uid, email, displayName })
+    })
+  },
+  computed: {
+    ...mapState('auth/login', ['user']),
+    ...mapGetters('auth/login', ['isAuthenticated'])
+  },
   methods: {
-    submitRegister: function() {
+    ...mapActions('auth/login', ['getUser']),
+    submitRegister: async function() {
       // ここにバリデーションの処理
       // ここにログインの処理
+      await this.firebaseCreate()
+      await this.userCreate()
+    },
+    firebaseCreate: function() {
+      firebase.auth().createUserWithEmailAndPassword(this.mail, this.password)
+        .then((user) => {
+          let localUserData = JSON.parse(localStorage.vuex)
+          this.uid = localUserData.auth.login.user.uid
+        })
+        .catch(error => {
+          console.log(error)
+        })
+    },
+    userCreate: function() {
+      let localUserData = JSON.parse(localStorage.vuex)
+      this.uid = localUserData.auth.login.user.uid
+      this.$axios.$post('/api/users', 
+        querystring.stringify({
+          username: this.username,
+          mail: this.mail,
+          uid: this.uid
+        }))
+        .then(result => {
+          this.$router.push("/")
+        })
     }
   }
 }

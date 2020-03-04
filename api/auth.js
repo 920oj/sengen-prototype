@@ -10,28 +10,32 @@ const User = database.User;
 
 //新規登録
 router.post('/users', function(req, res, next) {
-    let newName = req.body.name,
-        newMail = req.body.email,
-        
-        // localstorageからuidを取得
-        localUserData = JSON.parse(localStorage.vuex),
-        newUid = localUserData.auth.login.user.uid;
+    // const parse = querystring.parse
 
-    let newUser = new User({
-        uid: newUid,
-        name: newName,
-        mail: newMail,
-        point: 0,
-        declarations: [],
-        supports: []
-    });
+    console.log(req.body.mail)
+    console.log(req.body.username)
+    console.log(req.body.uid)
 
-    newUser.save(function(err) {
-        if(err) {
-            console.log(err);
-        }
-        res.redirect('/');
-    });
+    // let newName = req.body.username,
+        // localstorageからemail,uidを取得
+    //     newMail = req.body.email,
+    //     newUid = req.body.uid;
+    // console.log(newName)
+    // let newUser = new User({
+    //     uid: newUid,
+    //     name: newName,
+    //     mail: newMail,
+    //     point: 0,
+    //     declarations: [],
+    //     supports: []
+    // });
+
+    // newUser.save(function(err) {
+    //     if(err) {
+    //         console.log(err);
+    //     }
+    // });
+    res.send();
 });
 
 
