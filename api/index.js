@@ -9,6 +9,8 @@ const User = database.User;
 
 let declaration = require('./declaration')
 app.use('/', declaration);
+let auth = require('./auth')
+app.use('/', auth);
 
 //トップ
 app.get('/declarations', function(req, res, next) {

@@ -101,7 +101,7 @@ router.get('/test', function(req, res, next) {
 
     let newUser = new User({
         // _id: User.find({}).count() - 1,
-        uid: 0,
+        uid: '0',
         name: userName,
         mail: mail,
         point: 0,
@@ -131,7 +131,7 @@ router.get('/test', function(req, res, next) {
                 console.log(err);
             }
             dataCheck(Declaration);
-            res.send('OK');
+            res.send();
         });
     });
 })

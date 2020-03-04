@@ -17,6 +17,7 @@
     "firebase": "^7.9.3",
     "mongoose": "^5.9.2",
     "nuxt": "^2.0.0",
+    "querystring": "^0.2.0",
     "vuex-persistedstate": "^2.7.1"
   },
   "devDependencies": {
