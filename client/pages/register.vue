@@ -43,8 +43,9 @@ export default {
   },
   data() {
     return {
+      'username': '',
       'mail': '',
-      'password': ''
+      'password': '',
     }
   },
   methods: {

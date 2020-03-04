@@ -2,20 +2,20 @@
   <div class="login">
     <div class="login-wrapper">
       <h2>ログイン</h2>
-        <div class="login-mail">
+        <div class="login-form">
           <div class="form-icon-wrapper">
             <img src="~/assets/img/icon/envelope.svg" alt="メールアドレス" class="form-icon">
           </div>
           <div class="form-wrapper">
-            <input type="mail" name="mail" id="form-mail" v-model="mail" placeholder="メールアドレス" required>
+            <input type="mail" name="mail" class="form-style" v-model="mail" placeholder="メールアドレス" required>
           </div>
         </div>
-        <div class="login-password">
+        <div class="login-form">
           <div class="form-icon-wrapper">
             <img src="~/assets/img/icon/lock.svg" alt="パスワード" class="form-icon" style="width: 60%;">
           </div>
           <div class="form-wrapper">
-            <input type="password" name="password" id="form-password" v-model="password" placeholder="パスワード" required>
+            <input type="password" name="password" class="form-style" v-model="password" placeholder="パスワード" required>
           </div>
         </div>
         <div class="form-submit-btn" @click="submitLogin()">
@@ -88,20 +88,13 @@ export default {
   margin-bottom: 30px;
 }
 
-.login-mail {
+
+.login-form {
   display: flex;
   height: 100px;
   align-items: center;
   border-top: 2px solid #F8F8F8;
   border-bottom: 2px solid #F8F8F8;
-}
-
-.login-password {
-  display: flex;
-  height: 100px;
-  align-items: center;
-  border-bottom: 2px solid #F8F8F8;
-  margin-bottom: 30px;
 }
 
 .form-icon-wrapper {
@@ -121,18 +114,15 @@ export default {
   max-width: 42px;
 }
 
-#form-mail {
+.form-style {
   width: 100%;
   padding: 15px 0;
   font-size: 1rem;
   border: 0;
 }
 
-#form-password {
-  width: 100%;
-  padding: 15px 0;
-  font-size: 1rem;
-  border: 0;
+.form-submit-btn {
+  margin-top: 30px;
 }
 
 .login-forgot-password {
