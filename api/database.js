@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 let User = new Schema({
     //uid: JWT tokenに含まれるuser_idを使用
-    uid: String,
+    uid: Number,
     name: String,
     mail: String,
     point: Number,
@@ -12,10 +12,10 @@ let User = new Schema({
 });
 
 let Declaration = new Schema({
-    uid: Number,
+    index: Number,
     name: String,
     hasp: Number,
-    declarer: { type: Schema.Types.ObjectId, ref: 'User' },
+    declarer: { type: String, ref: 'User' },
     // declarer: Number,
     supporters: [{
         detail: { type: Number, ref: 'User' },
