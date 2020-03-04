@@ -2,7 +2,7 @@
   <div class="header-container">
     <div class="header">
       <div class="header-left">
-        <img src="~assets/img/sengen-logo.svg" alt="Sengen.jp" class="header-logo">
+        <img src="~assets/img/sengen-logo.svg" alt="Sengen.jp" class="header-logo" @click="jumpTo('/')">
       </div>
       <div class="header-right">
         <img src="~assets/img/icon/bars.svg" alt="menu" class="header-menu-bar" @click="toggleMenu()">
@@ -17,12 +17,12 @@
         </div>
       </div>
       <ul>
-        <li class="header-menu-elem">トップ</li>
-        <li class="header-menu-elem">ログイン</li>
-        <li class="header-menu-elem">検索</li>
+        <li class="header-menu-elem" @click="jumpTo('/')">トップ</li>
+        <li class="header-menu-elem" @click="jumpTo('/login')">ログイン</li>
+        <li class="header-menu-elem" @click="jumpTo('/search')">検索</li>
         <li class="header-menu-elem">宣言する</li>
-        <li class="header-menu-elem">マイページ</li>
-        <li class="header-menu-elem">ポイント購入</li>
+        <li class="header-menu-elem" @click="jumpTo('/mypage')">マイページ</li>
+        <li class="header-menu-elem" >ポイント購入</li>
       </ul>
     </div>
 
@@ -109,6 +109,7 @@ export default {
   color: #FFF;
   text-align: center;
   font-size: 1.3rem;
+  cursor: pointer;
 }
 
 .header-menu {
