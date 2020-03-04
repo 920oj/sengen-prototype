@@ -14,28 +14,27 @@ router.post('/users', function(req, res, next) {
 
     console.log(req.body.mail)
     console.log(req.body.username)
-    console.log(req.body.uid)
 
-    // let newName = req.body.username,
-        // localstorageからemail,uidを取得
-    //     newMail = req.body.email,
-    //     newUid = req.body.uid;
-    // console.log(newName)
-    // let newUser = new User({
-    //     uid: newUid,
-    //     name: newName,
-    //     mail: newMail,
-    //     point: 0,
-    //     declarations: [],
-    //     supports: []
-    // });
+    User.find({}, function(err, result) {
+        let userLength = Object.keys(result).length,
+            newName = req.body.username,
+            newMail = req.body.mail;
 
-    // newUser.save(function(err) {
-    //     if(err) {
-    //         console.log(err);
-    //     }
-    // });
-    res.send();
+        let newUser = new User({
+            uid: userLength,
+            name: newName,
+            mail: newMail,
+            point: 0,
+            declarations: [],
+            supports: []
+        });
+        newUser.save(function(err) {
+            if(err) {
+                console.log(err);
+            }
+            res.send();
+        });
+    })
 });
 
 

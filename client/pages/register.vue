@@ -73,21 +73,16 @@ export default {
     firebaseCreate: function() {
       firebase.auth().createUserWithEmailAndPassword(this.mail, this.password)
         .then((user) => {
-          let localUserData = JSON.parse(localStorage.vuex)
-          this.uid = localUserData.auth.login.user.uid
         })
         .catch(error => {
           console.log(error)
         })
     },
     userCreate: function() {
-      let localUserData = JSON.parse(localStorage.vuex)
-      this.uid = localUserData.auth.login.user.uid
       this.$axios.$post('/api/users', 
         querystring.stringify({
           username: this.username,
           mail: this.mail,
-          uid: this.uid
         }))
         .then(result => {
           this.$router.push("/")
