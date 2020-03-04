@@ -10,12 +10,34 @@ const User = database.User;
 
 //ポイント購入
 router.post('/point/purchase/:price', function(req, res, next) {
-    
-})
+    let purchasePrice = req.body.purchasePrice,
+        loginMail = req.body.mail;
+
+    User.findOne({ mail: loginMail }, function(err, result) {
+        result.point += purchasePrice;
+        result.save((err) => {
+            if(err) {
+                console.log(err);
+            }
+            res.redirect('/');
+        });
+    });
+});
 
 //ポイント交換
-router.post('/point/exchange/:giftcard', function(req, res, next) {
-
-})
+router.post('/point/exchange/:giftcard/:price', function(req, res, next) {
+    let exchangePrice = req.body.exchangePrice,
+        loginMail = req.body.mail;
+    
+    User.findOne({ mail: loginMail },function(err, result) {
+        result.point -= exchangePrice;
+        result.save((err) => {
+            if(err) {
+                console.log(err);
+            }
+            res.redirect('/');
+        });
+    });
+});
 
 module.exports = router
