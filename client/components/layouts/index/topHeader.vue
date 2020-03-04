@@ -18,7 +18,7 @@
     <div class="top-header-catch">
       <h2>あなたの目標を宣言しよう。</h2>
       <p>sengen.jpは、世界初の「逆クラウドファンディング」サイトです。宣言者は、自分の宣言ポイントを掛けて遂行したいプロジェクトを宣言し、応援者を募ります。もし宣言者がプロジェクトを完遂することができなかったら、応援者に宣言ポイントが分配されることになります。ポイントを掛けるという緊張感をもつと同時に、自分のプロジェクトをよりたくさんの人に知ってもらえるsengen.jp。あなたも宣言！してみませんか？</p>
-      <div class="top-header-btn" @click="$router.push('/register')">
+      <div class="top-header-btn" @click="$router.push('/register')" v-if="!isAuthenticated">
         <btnWithIcon title="新規登録" icon="img/icon/user-plus.svg" />
       </div>
     </div>
@@ -81,10 +81,11 @@ export default {
   line-height: 1.8;
   max-width: 500px;
   margin: 0 auto;
+  padding-bottom: 30px;
 }
 
 .top-header-btn {
-  padding: 30px 0;
+  padding-bottom: 30px;
 }
 
 .top-header-catch:after {
