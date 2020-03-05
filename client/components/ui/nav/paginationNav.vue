@@ -1,0 +1,108 @@
+<template>
+  <div class="pagination">
+    <div class="pagination-container" v-if="right_only">
+      <div class="pagination-btn btn-none"></div>
+      <div class="pagination-btn btn-none"></div>
+      <div class="pagination-btn btn-none"></div>
+      <div class="pagination-btn btn-active">1</div>
+      <div class="pagination-btn" @click="plusCurrent()">2</div>
+      <div class="pagination-btn" @click="plusCurrent()">&gt;</div>
+      <div class="pagination-btn" @click="lastCurrent()">&gt;&gt;</div>
+    </div>
+    <div class="pagination-container" v-if="common">
+      <div class="pagination-btn" @click="firstCurrent()">&lt;&lt;</div>
+      <div class="pagination-btn" @click="minusCurrent()">&lt;</div>
+      <div class="pagination-btn" @click="minusCurrent()">{{current - 1}}</div>
+      <div class="pagination-btn btn-active">{{current}}</div>
+      <div class="pagination-btn" @click="plusCurrent()">{{current + 1}}</div>
+      <div class="pagination-btn" @click="plusCurrent()">&gt;</div>
+      <div class="pagination-btn" @click="lastCurrent()">&gt;&gt;</div>
+    </div>
+    <div class="pagination-container" v-if="left_only">
+      <div class="pagination-btn" @click="firstCurrent()">&lt;&lt;</div>
+      <div class="pagination-btn" @click="minusCurrent()">&lt;</div>
+      <div class="pagination-btn" @click="minusCurrent()">{{max - 1}}</div>
+      <div class="pagination-btn btn-active">{{max}}</div>
+      <div class="pagination-btn btn-none"></div>
+      <div class="pagination-btn btn-none"></div>
+      <div class="pagination-btn btn-none"></div>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  data () {
+    return {
+      'right_only': true,
+      'common': false,
+      'left_only': false,
+    }
+  },
+  props: {
+    'max': Number,
+    'current': Number
+  },
+  methods: {
+    plusCurrent: async function() {
+      await this.$emit('plusCurrent');
+    },
+    lastCurrent: async function() {
+      await this.$emit('lastCurrent');
+    },
+    minusCurrent: async function() {
+      await this.$emit('minusCurrent');
+    },
+    firstCurrent: async function() {
+      await this.$emit('firstCurrent');
+    },
+  },
+  watch: {
+    current: function() {
+      if(this.current == 1) {
+        this.right_only = true;
+        this.common = false;
+        this.left_only = false;
+      }
+      else if (this.current == this.max) {
+        this.right_only = false;
+        this.common = false;
+        this.left_only = true;
+      }
+      else {
+        this.right_only = false;
+        this.common = true;
+        this.left_only = false;
+      }
+    }
+  }
+}
+</script>
+
+<style scoped>
+.pagination-container {
+  display: flex;
+  justify-content: center;
+  color: #FFF;
+  margin: 0 auto;
+}
+
+.pagination-btn {
+  width: 35px;
+  height: 35px;
+  background: #232531;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 5px;
+}
+
+.btn-none {
+  background: transparent;
+}
+
+.btn-active {
+  background: #F27435;
+}
+
+</style>
