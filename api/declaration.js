@@ -98,11 +98,6 @@ router.get('/declarations/top', function(req, res, next) {
     });
 });
 
-//宣言一覧取得（カテゴリーページ）
-router.get('category', function(req, res, next) {
-
-});
-
 //宣言詳細取得
 router.post('/declarations/:declaration', function(req, res, next) {
     let declarationIndex = req.params.declaration;
