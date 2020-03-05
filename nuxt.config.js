@@ -34,6 +34,7 @@ module.exports = {
 	*/
 	plugins: [
 		"~plugins/persistedstate",
+		'~plugins/vue-scrollto'
 	],
 	/*
 	** Nuxt.js dev-modules
