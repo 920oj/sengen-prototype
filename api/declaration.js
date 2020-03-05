@@ -61,22 +61,32 @@ router.get('/declarations/top', function(req, res, next) {
         
         function postDeclarations (result, declarationLength) {
             let start = 0,
-            end = 9,
-            countPages = 0,
-            pageDatas = new Map;
-
-            while(declarationLength > 10) {
+            end = 10,
+            countPages = 1,
+            pageDatas = new Map,
+            tenCountLength = declarationLength,
+            sendData = [];
+            
+            while(tenCountLength > 10) {
                 pageDatas.set(countPages, result.slice(start, end));
                 start += 10;
                 end += 10;
-                declarationLength -= 10;
+                tenCountLength -= 10;
                 countPages++;
             }
-            res.send(pageDatas);
+            end = declarationLength;
+            pageDatas.set(countPages, result.slice(start, end));
+            
+            while(countPages > 0) {
+                let setData = pageDatas.get(countPages);
+                sendData[countPages - 1] = setData
+                countPages--;
+            }
+            res.send(sendData);
         }
 
         if(declarationLength < 100) {
-            Declaration.find({ _id: { $gte: 0, $lte: declarationLength}})
+            Declaration.find({ index: { $gte: 0, $lte: declarationLength}})
                 .populate('declarer')
                 .exec( function(err, result) {
                     if(err) {
@@ -85,7 +95,7 @@ router.get('/declarations/top', function(req, res, next) {
                     postDeclarations(result, declarationLength);
                 });
             } else {
-                Declaration.find({ _id: { $gte: declarationLength - 100, $lte: declarationLength}})
+                Declaration.find({ index: { $gte: declarationLength - 100, $lte: declarationLength}})
                     .populate('declarer')
                     .exec( function(err, result) {
                         if(err) {
@@ -158,7 +168,6 @@ router.get('/test', function(req, res, next) {
         mail = 'chinoknct@gmail.com';
 
     let newUser = new User({
-        // _id: User.find({}).count() - 1,
         uid: 0,
         name: userName,
         mail: mail,
@@ -181,7 +190,8 @@ router.get('/test', function(req, res, next) {
             name: declarationTitle,
             hasp: hasp,
             declarer: newUser._id,
-            supporter: [],
+            supporters: [],
+            deadline: Date.now(),
             tag: 0
         });
         
