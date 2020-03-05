@@ -2,18 +2,18 @@
   <div class="sengen">
     <div class="sengen-wrapper">
       <div class="sengen-category">
-        {{category}}
+        {{ tag }}
       </div>
       <div class="sengen-img">
         <!-- あとで:src="img"にする -->
         <!-- <img src="~/assets/img/png/ogp.png" alt="サムネイル"> -->
       </div>
-      <div class="sengen-description">
-        <p class="sengen-title">{{title}}</p>
+      <div class="sengsen-description">
+        <p class="sengen-title">{{ name }}</p>
         <div class="sengen-desc">
-          <p>宣言pt: {{point}}pt</p>
-          <p>応援者数: {{supporter}}人</p>
-          <p>残り: {{expires}}日</p>
+          <p>宣言pt: {{ hasp }}pt</p>
+          <p>応援者数: {{ supporters }}人</p>
+          <p>残り: {{ deadline }}日</p>
         </div>
       </div>
     </div>
@@ -23,12 +23,12 @@
 <script>
 export default {
   props: [
-    'category',
-    'title',
+    'tag',
+    'name',
     'img',
-    'point',
-    'supporter',
-    'expires',
+    'hasp',
+    'supporters',
+    'deadline',
   ]
 }
 </script>

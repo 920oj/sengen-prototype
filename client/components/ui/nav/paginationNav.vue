@@ -45,17 +45,27 @@ export default {
   },
   methods: {
     plusCurrent: async function() {
+      this.scrollTop()
       await this.$emit('plusCurrent');
     },
     lastCurrent: async function() {
+      this.scrollTop()
       await this.$emit('lastCurrent');
     },
     minusCurrent: async function() {
+      this.scrollTop()
       await this.$emit('minusCurrent');
     },
     firstCurrent: async function() {
+      this.scrollTop()
       await this.$emit('firstCurrent');
     },
+    scrollTop: function() {
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      })
+    }
   },
   watch: {
     current: function() {

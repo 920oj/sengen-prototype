@@ -1,7 +1,12 @@
 <template>
   <div class="top-sengen">
     <div class="top-sengen-elem" v-for="item in displayList" :key="item.id">
-      <Sengen :category="item.category" :title="item.title" :point="item.point" :supporter="item.supporter" :expires="item.expires" />
+      <Sengen :tag="item.tag" 
+              :name="item.name"
+              :hasp="item.hasp"
+              :supporters="item.supporters" 
+              :deadline="item.deadline" 
+      />
     </div>
     <div class="top-sengen-pagination">
       <Pagination 
