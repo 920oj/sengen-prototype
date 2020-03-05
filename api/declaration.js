@@ -59,11 +59,42 @@ router.get('/declarations/top', function(req, res, next) {
     Declaration.find({}, function(err, result) {
         let declarationLength = Object.keys(result).length;
         
-        Declaration.find({ _id: { $gte: declarationLength - 10, $lte: declarationLength}})
-            .populate('declarer')
-            .exec( function(err, result) {
-                res.send(result);
-            });
+        function postDeclarations (result, declarationLength) {
+            let start = 0,
+            end = 9,
+            countPages = 0,
+            pageDatas = new Map;
+
+            while(declarationLength > 10) {
+                pageDatas.set(countPages, result.slice(start, end));
+                start += 10;
+                end += 10;
+                declarationLength -= 10;
+                countPages++;
+            }
+            res.send(pageDatas);
+        }
+
+        if(declarationLength < 100) {
+            Declaration.find({ _id: { $gte: 0, $lte: declarationLength}})
+                .populate('declarer')
+                .exec( function(err, result) {
+                    if(err) {
+                        console.log(err);
+                    }
+                    postDeclarations(result, declarationLength);
+                });
+            } else {
+                Declaration.find({ _id: { $gte: declarationLength - 100, $lte: declarationLength}})
+                    .populate('declarer')
+                    .exec( function(err, result) {
+                        if(err) {
+                            console.log(err);
+                        }
+                        postDeclarations(result, declarationLength);
+                    });
+        }
+
     });
 });
 

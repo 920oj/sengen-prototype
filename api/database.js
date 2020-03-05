@@ -2,7 +2,6 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 let User = new Schema({
-    //uid: JWT tokenに含まれるuser_idを使用
     uid: Number,
     name: String,
     mail: String,
@@ -14,15 +13,17 @@ let User = new Schema({
 let Declaration = new Schema({
     index: Number,
     name: String,
-    hasp: Number,
+    tag: Number,
+    overview: String,
+    deadline: Date,
+    detail: String,
     declarer: { type: String, ref: 'User' },
-    // declarer: Number,
     supporters: [{
         detail: { type: Number, ref: 'User' },
         comment: String
     }],
-    // supporters: Number,
-    tag: Number
+    hasp: Number,
+    report: String
 });
 
 let Category = new Schema({
