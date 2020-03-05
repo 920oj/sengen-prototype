@@ -18,37 +18,69 @@ let dataCheck = (collection) => {
 
 //新規宣言作成
 router.post('/declarations', function(req, res, next) {
-    let declarationTitle = req.body.declarationTitle,
-        hasp = req.body.hasp,
-        localUserData = JSON.parse(localStorage.vuex),
-        userUid = localUserData.auth.login.user.uid,
-        tag = req.body.tag;
+    
+    Declaration.find({}, function(err, result) {
+        let declarationLength = Object.keys(result).length,
+            declarationTitle = req.body.declarationTitle,
+            hasp = req.body.hasp,
+            loginMail = req.body.mail;
+            // tag = req.body.tag;
+            
+        User.findOne({ mail: loginMail }, function(err, result) {
+            if(err) {
+                console.log(err);
+            }
+            createDeclaration(result);
+        });
 
-    let newDeclaration = new Declaration({
-        index: User.find({}).count() - 1,
-        name: declarationTitle,
-        hasp: hasp,
-        declarer: userUid,
-        supporter: [],
-        tag: tag
-    });
-
-    newDeclaration.save(function(err) {
-        if(err) {
-            console.log(err);
+        function createDeclaration(result) {
+            let newDeclaration = new Declaration({
+                index: declarationLength,
+                name: declarationTitle,
+                hasp: hasp,
+                declarer: result.mail,
+                supporter: [],
+                tag: 0
+            });
+            
+            newDeclaration.save(function(err) {
+                if(err) {
+                    console.log(err);
+                }
+                dataCheck(Declaration);
+                res.redirect('/');
+            });
         }
-        res.redirect('/');
     });
 });
 
-//宣言詳細取得
-router.get('/declarations/:declaration', function(req, res, next) {
-    Declaration.findOne({ _id: '宣言の_id'}, function(err, result) {
-        if(err) {
-            console.log(err);
-        }
-        res.send(result);
+//宣言一覧取得（トップページ）
+router.get('/declarations/top', function(req, res, next) {
+    Declaration.find({}, function(err, result) {
+        let declarationLength = Object.keys(result).length;
+        
+        Declaration.find({ _id: { $gte: declarationLength - 10, $lte: declarationLength}})
+            .populate('declarer')
+            .exec( function(err, result) {
+                res.send(result);
+            });
     });
+});
+
+//宣言一覧取得（カテゴリーページ）
+router.get('category', function(req, res, next) {
+
+});
+
+//宣言詳細取得
+router.post('/declarations/:declaration', function(req, res, next) {
+    let declarationIndex = req.params.declaration;
+    Declaration.findOne({ index: declarationIndex })
+        .populate('declarer')
+        .exec( function(err, result) {
+            console.log(result);
+            res.send(result);
+        });
 });
 
 //宣言編集
@@ -101,7 +133,7 @@ router.get('/test', function(req, res, next) {
 
     let newUser = new User({
         // _id: User.find({}).count() - 1,
-        uid: '0',
+        uid: 0,
         name: userName,
         mail: mail,
         point: 0,
@@ -109,16 +141,17 @@ router.get('/test', function(req, res, next) {
         supports: []
     });
 
-    dataCheck(User);
-    
-    newUser.save(function(err) {})
+    newUser.save(function(err) {
+        dataCheck(User);
+    })
+
     Declaration.find({}, function(err, result) {
         let declarationLength = Object.keys(result).length,
         declarationTitle = 'サンプルプロジェクト',
         hasp = 1000;
         
         let newDeclaration = new Declaration({
-            uid: declarationLength,
+            index: declarationLength,
             name: declarationTitle,
             hasp: hasp,
             declarer: newUser._id,

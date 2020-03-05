@@ -12,14 +12,6 @@ app.use('/', declaration);
 let auth = require('./auth')
 app.use('/', auth);
 
-//トップ
-app.get('/declarations', function(req, res, next) {
-    let declarationCurrentLength = Declaration.find({}).count();
-    Declaration.find({ _id: { $gte: declarationCurrentLength - 10, $lte: declarationCurrentLength}}, function(err, data) {
-        res.send(result);
-    })
-});
-
 //検索
 app.post('/search/.+', function(req, res, next) {
 
@@ -27,6 +19,11 @@ app.post('/search/.+', function(req, res, next) {
 
 //カテゴリー
 app.post('/category/.+', function(req, res, next) {
+
+});
+
+//カテゴリー全取得
+app.get('/category', function(req, res, next) {
 
 });
 
