@@ -7,7 +7,7 @@
 <script>
 export default {
   props: [
-    'max_row',
+    'max',
     'current'
   ]
 }
