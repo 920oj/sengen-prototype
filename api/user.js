@@ -51,19 +51,26 @@ function checkFileType (file, cb) {
 
 const User = database.User;
 
+function loginCollation (value) {
+    let loginMail = req.body.mail;
+    User.findOne({ mail: loginMail}, function(err, result) {
+        res.send(`result.${value}`);
+    })
+}
+
 //ポイント確認
 app.get('users/:user/points', function(req, res, next) {
-    
+    loginCollation(point);
 })
 
 //自分の宣言一覧確認
 app.get('users/:user/declarations', function(req, res, next) {
-
+    loginCollation(declarations);
 })
 
 //自分の応援している一覧確認
 app.get('users/:user/supports', function(req, res, next) {
-
+    loginCollation(supports);
 })
 
 module.exports = router

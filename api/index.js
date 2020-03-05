@@ -30,13 +30,12 @@ app.post('/search/:keyword', function(req, res, next) {
     );
 });
 
-//カテゴリー
-app.post('/category/.+', function(req, res, next) {
-});
-
-//カテゴリー全取得
-app.get('/category', function(req, res, next) {
-
+//カテゴリーページ
+app.post('/category/:category', function(req, res, next) {
+    let category = req.params.category;
+    category.findOne({ uid: category }, function(err, result) {
+        res.send(result);
+    });
 });
 
 module.exports = {
