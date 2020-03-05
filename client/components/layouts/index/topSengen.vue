@@ -4,7 +4,14 @@
       <Sengen :category="item.category" :title="item.title" :point="item.point" :supporter="item.supporter" :expires="item.expires" />
     </div>
     <div class="top-sengen-pagination">
-      <Pagination :max="max_row"  />
+      <Pagination 
+        :max="max_row" 
+        :current="current" 
+        @plusCurrent="plusCurrent()" 
+        @lastCurrent="lastCurrent()" 
+        @minusCurrent="minusCurrent()" 
+        @firstCurrent="firstCurrent()"
+      />
     </div>
   </div>
 </template>
@@ -16,7 +23,7 @@ import Pagination from '~/components/ui/nav/paginationNav.vue'
 export default {
   data () {
     return {
-      'current': 3,
+      'current': 1,
     }
   },
   props: [
@@ -25,6 +32,20 @@ export default {
   components: {
     Sengen,
     Pagination
+  },
+  methods: {
+    firstCurrent() {
+      this.current = 1;
+    },
+    plusCurrent() {
+      this.current += 1;
+    },
+    minusCurrent() {
+      this.current -= 1;
+    },
+    lastCurrent() {
+      this.current = this.list.length;
+    }
   },
   computed: {
     max_row: function() {
@@ -38,5 +59,7 @@ export default {
 </script>
 
 <style>
-
+.top-sengen-pagination {
+  margin-bottom: 30px;
+}
 </style>
