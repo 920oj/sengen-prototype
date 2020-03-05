@@ -10,11 +10,6 @@ const User = database.User;
 
 //新規登録
 router.post('/users', function(req, res, next) {
-    // const parse = querystring.parse
-
-    console.log(req.body.mail)
-    console.log(req.body.username)
-
     User.find({}, function(err, result) {
         let userLength = Object.keys(result).length,
             newName = req.body.username,
@@ -34,32 +29,20 @@ router.post('/users', function(req, res, next) {
             }
             res.send();
         });
-    })
+    });
 });
 
 //以下のコードはnuxt側のmountedに移行
 
 //ログアウト
-router.post('/logout/.+/logout', function(req, res, next) {
-    mapAction(['setUser']);
-    firebase.auth().signOut()
-    .then(() => {
-        this.setUser(null)
-    }).catch((error) => {
-        console.log(error);
-    });
-})
-
-router.post('/login_check', function(req, res, next) {
-    setTimeout(() => {
-        if (!this.isAuthenticated) {
-            // ログインしていなかったら飛ぶページを設定
-            this.$router.push('/login')
-        } else {
-            this.loaded = true
-            console.log('OK')
-        }
-    }, 0)
-});
+// router.post('/logout/.+/logout', function(req, res, next) {
+//     mapAction(['setUser']);
+//     firebase.auth().signOut()
+//     .then(() => {
+//         this.setUser(null)
+//     }).catch((error) => {
+//         console.log(error);
+//     });
+// })
 
 module.exports = router

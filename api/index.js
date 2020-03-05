@@ -7,24 +7,35 @@ app.use(bodyParser.urlencoded({extended: false}));
 
 const User = database.User;
 
-let declaration = require('./declaration')
+let declaration = require('./declaration');
 app.use('/', declaration);
-let auth = require('./auth')
+let auth = require('./auth');
 app.use('/', auth);
 
 //検索
-app.post('/search/.+', function(req, res, next) {
+app.post('/search/:keyword', function(req, res, next) {
+    let keyword = req.params.keyword;
 
+    Declaration.find({
+        name: `/${keyword}/`,
+        overview: `/${keyword}/`,
+        detail: `/${keyword}/` },
+        function(err, result) {
+            //条件が重複した回数をカウント（DISTINCT）
+            let resultLength = Object.keys(result).length;
+            while(resultLength > 0) {
+                resultLegth--;
+            }
+        }
+    );
 });
 
-//カテゴリー
-app.post('/category/.+', function(req, res, next) {
-
-});
-
-//カテゴリー全取得
-app.get('/category', function(req, res, next) {
-
+//カテゴリーページ
+app.post('/category/:category', function(req, res, next) {
+    let category = req.params.category;
+    category.findOne({ uid: category }, function(err, result) {
+        res.send(result);
+    });
 });
 
 module.exports = {
