@@ -3,21 +3,53 @@
     <Header />
     <div class="sengen-list">
       <h2 class="sengen-list-title">現在遂行中の宣言</h2>
-      <Sengen category="Web開発" title="自分でWebサービスを立ち上げる！実績解除サービスを3月末までに作ります！" point="5000" supporter="15" expires="30" />
+      <!-- <Sengen category="Web開発" title="自分でWebサービスを立ち上げる！実績解除サービスを3月末までに作ります！" point="5000" supporter="15" expires="30" /> -->
+      <Sengenarea :list="sengen_list" />
     </div>
   </div>
 </template>
 
 <script>
 import Header from '~/components/layouts/index/topHeader.vue'
-import Sengen from '~/components/layouts/common/sengen.vue'
+import Sengenarea from '~/components/layouts/index/topSengen.vue'
 
 export default {
   layout: 'onlyFooter',
   components: {
     Header,
-    Sengen,
+    Sengenarea,
   },
+  data () {
+    return {
+      // 仮データ
+      'sengen_list': [
+        {
+          'category': 'Web開発',
+          'title': '自分でWebサービスを立ち上げる！実績解除サービスを3月末までに作ります！',
+          'point': 5000,
+          'supporter': 15,
+          'expires': 30,
+        },
+        {
+          'category': 'Web開発',
+          'title': '自分でWebサービスを立ち上げる！実績解除サービスを3月末までに作ります！',
+          'point': 5000,
+          'supporter': 15,
+          'expires': 30,
+        },
+        {
+          'category': 'Web開発',
+          'title': '自分でWebサービスを立ち上げる！実績解除サービスを3月末までに作ります！',
+          'point': 5000,
+          'supporter': 15,
+          'expires': 30,
+        }
+      ],
+    }
+  },
+  computed: {
+
+  }
 }
 </script>
 
