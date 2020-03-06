@@ -1,5 +1,5 @@
 <template>
-  <div class="login">
+  <div class="login" v-if="isLoaded">
     <div class="login-wrapper">
       <h2>ログイン</h2>
         <div class="login-form">
@@ -39,6 +39,7 @@ export default {
   },
   data() {
     return {
+      'isLoaded': false,
       'mail': '',
       'password': ''
     }
@@ -56,6 +57,9 @@ export default {
     judgeLogin: function() {
       if(this.isAuthenticated) {
         this.$router.push("/")
+      }
+      else {
+        this.isLoaded = true;
       }
     }
   },
