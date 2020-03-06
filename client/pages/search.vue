@@ -1,28 +1,53 @@
 <template>
     <div class="search">
         <div class="search-form">
-            <searchBar />
+            <SearchBar 
+                @dataToParent="dataToParent"
+            />
         </div>
         <div class="search-data">
-            <sengen />
+            <!-- <SengenArea :list="search_list" /> -->
         </div>
     </div>
 </template>
 
 <script>
-import searchBar from '~/components/ui/bar/searchBar.vue'
-import sengen from '~/components/layouts/common/sengen.vue'
+import SearchBar from '~/components/ui/bar/searchbarSeparation.vue'
+import SengenArea from '~/components/layouts/index/topSengen.vue'
 
 export default {
     components: {
-        searchBar,
-        sengen
-    }
+        SearchBar,
+        SengenArea
+    },
+    data() {
+        return {
+            searchData: '',
+            search_list: ''
+        }
+    },
+    methods: {
+        dataToParent: function(value) {
+            this.searchData = value
+            this.searchPost()
+        },
+        searchPost: function() {
+            let search_list = this.$axios
+                                .$post(`/api/search/${this.searchData}`)
+                                .then(result => {
+                                    this.search_list = result
+                                })
+        }
+    },
 }
 </script>
 
 <style scoped>
 .search-form {
     padding: 30px 0px;
+}
+
+.search-data {
+    margin-top: 50px;
 }
 </style>
