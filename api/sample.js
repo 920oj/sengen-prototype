@@ -44,7 +44,7 @@ router.get('/testdeclaration', function(req, res, next) {
             index: declarationLength,
             name: declarationTitle,
             tag: 0,
-            thumnail: '~assets/img/png/ogp.png',
+            thumbnail: '/_nuxt/client/assets/img/png/ogp.png',
             hasp: hasp,
             declarer: newUser._id,
             supporters: [],

@@ -4,6 +4,7 @@
       <Sengen :tag="item.tag" 
               :name="item.name"
               :hasp="item.hasp"
+              :thumbnail="item.thumbnail"
               :supporters="item.supporters" 
               :deadline="item.deadline" 
       />

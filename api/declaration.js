@@ -92,7 +92,7 @@ router.post('/declarations', function(req, res, next) {
                             index: declarationLength,
                             name: declarationTitle,
                             tag: 0,
-                            thumnail: imageLocation,
+                            thumbnail: imageLocation,
                             hasp: hasp,
                             declarer: result.mail,
                             supporter: [],

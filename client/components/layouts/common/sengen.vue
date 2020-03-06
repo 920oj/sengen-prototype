@@ -4,9 +4,7 @@
       <div class="sengen-category">
         {{ tag }}
       </div>
-      <div class="sengen-img">
-        <!-- あとで:src="img"にする -->
-        <!-- <img src="~/assets/img/png/ogp.png" alt="サムネイル"> -->
+      <div class="sengen-img" :style="`background-image: url(${thumbnail})`">
       </div>
       <div class="sengen-description">
         <p class="sengen-title">{{ name }}</p>
@@ -25,7 +23,7 @@ export default {
   props: [
     'tag',
     'name',
-    'img',
+    'thumbnail',
     'hasp',
     'supporters',
     'deadline',
