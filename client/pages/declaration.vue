@@ -32,9 +32,12 @@
           </div>
         </div>
 
-        <div class="declaration-form-wrapper">
+        <div class="declaration-form-wrapper" style="flex-direction: column;">
           <p>画像アップロード <span class="required-ast">&lowast;</span></p>
-          <!-- ここにアップローダーのライブラリをいれる -->
+          <div class="img-uploader-img"></div>
+          <div class="img-upload-btn">
+            <p>アップロード</p>
+          </div>
         </div>
 
         <div class="declaration-form-wrapper">
@@ -132,6 +135,30 @@ export default {
 
 #point-form p {
   text-align: center;
+}
+
+.img-uploader-img {
+  background-image: url('~assets/img/png/ogp.png');
+  background-size: cover;
+  background-position: center center;
+  padding-top: 56.25%;
+  width: 100%;
+  margin: 30px 0;
+}
+
+.img-upload-btn {
+  display: inline-block;
+  background: #232531;
+  color: #FFF;
+  width: 6em;
+  padding: 10px 15px;
+  margin: 0 auto;
+  cursor: pointer;
+}
+
+.img-upload-btn:hover {
+  background: #25B2E8;
+  transition: background-color, 0.3s;
 }
 
 .current-point {
