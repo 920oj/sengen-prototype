@@ -10,8 +10,8 @@
             <p>タイトル <span class="required-ast">&lowast;</span> </p>
           </div>
           <div class="declaration-form">
-            <input v-if="checkBefore" type="text" class="text-form" v-model="title">
-            <p v-else>{{ title }}</p>
+            <input v-show="checkBefore" type="text" name="title" class="text-form" v-model="title">
+            <p v-show="!checkBefore">{{ title }}</p>
           </div>
         </div>
 
@@ -20,9 +20,30 @@
             <p>カテゴリー <span class="required-ast">&lowast;</span> </p>
           </div>
           <div class="declaration-form">
-            <input v-if="checkBefore" type="text" class="text-form" v-model="category">
-            <p v-else>{{ category }}</p>
+            <input v-show="checkBefore" type="text" name="category" class="text-form" v-model="category">
+            <p v-show="!checkBefore">{{ category }}</p>
             <!-- 選ぶやつに変更する -->
+            <!-- <ul class="category-menu">
+              <li class="menu-single">
+                <a class="init-bottom">カテゴリーを選択</a>
+                <ul class="menu-dropdown">
+                  <li><p>アート</p></li>
+                  <li><p>プロダクト</p></li>
+                  <li><p>テクノロジー</p></li>
+                  <li><p>音楽</p></li>
+                  <li><p>ゲーム</p></li>
+                  <li><p>書籍</p></li>
+                  <li><p>映像</p></li>
+                  <li><p>スポーツ</p></li>
+                  <li><p>ビジネス</p></li>
+                  <li><p>ファッション</p></li>
+                  <li><p>アニメ</p></li>
+                  <li><p>飲食</p></li>
+                  <li><p>ヘルスケア</p></li>
+                  <li><p>その他</p></li>
+                </ul>
+              </li>
+            </ul> -->
           </div>
         </div>
 
@@ -31,22 +52,22 @@
             <p>概要 <span class="required-ast">&lowast;</span> </p>
           </div>
           <div class="declaration-form">
-            <textarea v-if="checkBefore" class="textarea-form" v-model="overview"></textarea>
-            <p v-else>{{ overview }}</p>
+            <textarea v-show="checkBefore" name="overview" class="textarea-form" v-model="overview"></textarea>
+            <p v-show="!checkBefore">{{ overview }}</p>
           </div>
         </div>
 
         <div class="declaration-form-wrapper" style="flex-direction: column;">
           <p>画像アップロード <span class="required-ast">&lowast;</span></p>
-          <div class="img-uploader-img"></div>
-          <div v-if="checkBefore" class="img-upload-btn" @click="uploadThumbnail()">
-            <p>アップロード</p>
-          </div>
+          <img src="" class="img-uploader-img" id="img" />
+          <!-- <div class="img-upload-btn"> -->
+            <input v-show="checkBefore" @change="uploadThumbnail()" type="file" name="file" id="file"/>
+          <!-- </div> -->
         </div>
 
         <div class="declaration-form-wrapper" id="date-form">
           <p>終了日 <span class="required-ast">&lowast;</span></p>
-          <client-only v-if="checkBefore">
+          <client-only v-show="checkBefore">
             <date-picker class="datepicker-wrapper" 
               :language="dpLocale"
               :format="dpFormat"
@@ -54,13 +75,15 @@
               v-model="deadline"
             />
           </client-only>
-          <p v-else>{{ deadline }}</p>
+          <p v-show="!checkBefore">{{ deadline }}</p>
+          <input class="hiddenForm" type="text" name="deadline" v-model="deadline" />
         </div>
 
         <div class="declaration-form-wrapper" id="point-form">
           <p style="text-align: left;">ポイント <span class="required-ast">&lowast;</span></p>
           <p class="current-point">{{ hasp }} pt</p>
-          <div class="point-btn-wrapper" v-if="checkBefore">
+          <input type="text" name="point" class="hiddenForm" v-model="hasp" />
+          <div class="point-btn-wrapper" v-show="checkBefore">
             <div class="point-btn" @click="resetPoint()">
               <p>リセット</p>
             </div>
@@ -75,13 +98,13 @@
             </div>
           </div>
         </div>
-        <div class="confirm-btn" @click="checkForm()" v-if="checkBefore">
+        <div class="confirm-btn" @click="checkForm()" v-show="checkBefore">
           <btnOnlyTitle title="確認"/>
         </div>
-        <div class="confirm-comment" v-if="!checkBefore">
+        <div class="confirm-comment" v-show="!checkBefore">
           <p>以上の内容でよろしいですか？</p>
         </div>
-        <div class="confirm-btn" @click="postForm()" v-if="!checkBefore">
+        <div class="confirm-btn" @click="postForm()" v-show="!checkBefore">
           <btnOnlyTitle title="宣言！"/>
         </div>
       </div>
@@ -94,6 +117,7 @@
 <script>
 import {ja} from 'vuejs-datepicker/dist/locale'
 import btnOnlyTitle from '~/components/ui/btn/btnOnlyTitle.vue'
+import querystring from 'querystring'
 
 export default {
   components: {
@@ -108,12 +132,24 @@ export default {
       overview: '',
       deadline: '',
       hasp: 0,
-      checkBefore: true
+      checkBefore: true,
+      imgData: '',
+      image: '',
+      imgName: '',
+      uploadFile: ''
     }
   },
   methods: {
     uploadThumbnail: function() {
-
+      let preview = document.querySelector('#img')
+      let file = document.querySelector('input[type=file]').files[0]
+      let render = new FileReader()
+      render.addEventListener("load", function() {
+        preview.src = render.result
+      }, false)
+      if(file) {
+        render.readAsDataURL(file)
+      }
     },
     resetPoint: function() {
       this.hasp = 0
@@ -134,7 +170,39 @@ export default {
       console.log(this.deadline)
       console.log(this.hasp)
       this.checkBefore = false
-    }
+    },
+    postForm: function(e) {
+      let params = new FormData(),
+          localUserData = JSON.parse(localStorage.vuex),
+          userMail = localUserData.auth.login.user.email
+          console.log(localStorage.vuex)
+          console.log(userMail)
+
+      let preview = document.querySelector('#img')
+      let file = document.querySelector('input[type=file]').files[0]
+
+      // params.append('title', this.title)
+      // params.append('category', this.category)
+      // params.append('overview', this.overview)
+      // params.append('deadline', this.deadline)
+      // params.append('hasp', this.hasp)
+      // params.append('mail', userMail)
+      // params.append('file', this.fileSelectDom)
+
+      this.$axios.$post('/api/declarations', 
+        querystring.stringify({
+          title: this.title,
+          category: this.category,
+          overview: this.overview,
+          hasp: this.hasp,
+          mail: userMail,
+          thumbnail: file
+        }))
+        .then(result => {
+          console.log('OK')
+          this.$router.push('/')
+        })
+    },
   }
 }
 </script>
@@ -200,10 +268,9 @@ export default {
 }
 
 .img-uploader-img {
-  background-image: url('~assets/img/png/ogp.png');
   background-size: cover;
   background-position: center center;
-  padding-top: 56.25%;
+  /* padding-top: 56.25%; */
   width: 100%;
   margin: 30px 0;
 }
@@ -216,6 +283,14 @@ export default {
   padding: 10px 15px;
   margin: 0 auto;
   cursor: pointer;
+  z-index: 0.5;
+}
+
+.img-upload-btn > input {
+  /* display: none; */
+  height: 100%;
+  width: 100%;
+  z-index: 0.2;
 }
 
 .img-upload-btn:hover {
@@ -272,6 +347,64 @@ export default {
 .confirm-comment {
   width: 100%;
   text-align: center;
+}
+
+.menu {
+  position: relative;
+  width: 100%;
+  height: 2rem;
+  max-width: 10rem;
+  margin: 0 auto;
+}
+
+.menu:before,
+.menu:after {
+    content: " ";
+    display: table;
+}
+
+.menu li {
+  width: 100%;
+  height: 2rem;
+  line-height: 2rem;
+  background: rgb(29, 33, 19);
+}
+
+.menu > li p {
+    /* display: block; */
+    color: #fff;
+}
+
+li.menu-single {
+  list-style: none;
+}
+
+li.menu-single {
+  position: relative;
+}
+
+ul.menu-dropdown {
+  list-style: none;
+  visibility: hidden;
+  opacity: 0;
+}
+
+li.menu-single ul.menu-dropdown{
+  position: absolute;
+  top: 50px;
+  width: 100%;
+  background-color:#FFFFFF;
+  transition: all .2s ease;
+}
+
+li.menu-single:active ul.menu-dropdown {
+  top: 50px;
+  visibility: visible;
+  opacity: 1;
+}
+
+.hiddenForm {
+  display: none;
 }
 
 </style>

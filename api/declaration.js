@@ -11,6 +11,7 @@ app.use(bodyParser.urlencoded({extended: false}));
 
 const User = database.User;
 const Declaration = database.Declaration;
+const Category = database.Category;
 
 //AWSのapikeyを入力
 const s3 = new AWS.S3({
@@ -65,36 +66,48 @@ router.post('/declarations', function(req, res, next) {
     
     Declaration.find({}, function(err, result) {
         let declarationLength = Object.keys(result).length,
-            declarationTitle = req.body.declarationTitle,
+            declarationTitle = req.body.title,
+            tag = req.body.category,
+            overview = req.body.overview,
             hasp = req.body.hasp,
-            loginMail = req.body.mail;
-            // tag = req.body.tag;
-            
-        User.findOne({ mail: loginMail }, function(err, result) {
-            if(err) {
-                console.log(err);
-            }
-            createDeclaration(result);
-        });
+            loginMail = req.body.mail,
+            deadline = req.body.deadline;
 
-        function createDeclaration(result) {
-            imgUpload(req, res, function(err) {
+        Category.findOne({ uid: tag }, function(err, result) {
+            tag = result.name
+            
+            User.findOne({ mail: loginMail }, function(err, result) {
                 if(err) {
-                  console.log(err);
-                } else {
-                    if (req.file === undefined) {
-                        console.log('No File');
-                    } else {
+                    console.log(err);
+                }
+                console.log(result)
+                createDeclaration(result);
+                res.send();
+            });
+        });
+            
+        function createDeclaration(result) {
+            // imgUpload(req, res, function(err) {
+                // if(err) {
+                //   console.log(err);
+                // } else {
+                //     if (req.file === undefined) {
+                //         console.log('No File');
+                //     } else {
                         //ここで取得したデータをデータベースに保存
-                        const imageName = req.file.key;
-                        const imageLocation = req.file.location;
+                        const imageName = req.file;
+                        console.log(imageName)
+                        console.log('result' + result)
+                        // const imageLocation = req.file.location;
                         let newDeclaration = new Declaration({
                             index: declarationLength,
                             name: declarationTitle,
-                            tag: 0,
-                            thumbnail: imageLocation,
+                            overview: overview,
+                            tag: tag,
+                            // thumbnail: imageLocation,
+                            thumbnail: '/_nuxt/client/assets/img/png/ogp.png',
                             hasp: hasp,
-                            declarer: result.mail,
+                            declarer: result._id,
                             supporter: [],
                         });
                     
@@ -103,11 +116,10 @@ router.post('/declarations', function(req, res, next) {
                                 console.log(err);
                             }
                             dataCheck(Declaration);
-                            res.redirect('/');
                         });
-                    }
-                }
-            });
+                    // }
+                // }
+            // });
         }
     });
 });

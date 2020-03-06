@@ -35,14 +35,12 @@ router.post('/users', function(req, res, next) {
 //以下のコードはnuxt側のmountedに移行
 
 //ログアウト
-// router.post('/logout/.+/logout', function(req, res, next) {
-//     mapAction(['setUser']);
-//     firebase.auth().signOut()
-//     .then(() => {
-//         this.setUser(null)
-//     }).catch((error) => {
-//         console.log(error);
-//     });
-// })
+    // mapAction(['setUser']);
+    // firebase.auth().signOut()
+    // .then(() => {
+    //     this.setUser(null)
+    // }).catch((error) => {
+    //     console.log(error);
+    // });
 
 module.exports = router
