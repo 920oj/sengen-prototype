@@ -40,9 +40,15 @@
           </div>
         </div>
 
-        <div class="declaration-form-wrapper">
-          <p>期間 <span class="required-ast">&lowast;</span></p>
-          <!-- ここにdate-pickerのライブラリをいれる -->
+        <div class="declaration-form-wrapper" id="date-form">
+          <p>終了日 <span class="required-ast">&lowast;</span></p>
+          <client-only>
+            <date-picker class="datepicker-wrapper" 
+              :language="dpLocale"
+              :format="dpFormat"
+              placeholder="日付を選択"
+            />
+          </client-only>
         </div>
 
         <div class="declaration-form-wrapper" id="point-form">
@@ -72,8 +78,14 @@
 </template>
 
 <script>
+import {ja} from 'vuejs-datepicker/dist/locale'
 export default {
-
+  data() {
+    return {
+      dpFormat: 'yyyy/M/d(D)',
+      dpLocale: ja,
+    }
+  }
 }
 </script>
 
@@ -185,4 +197,19 @@ export default {
   background: #25B2E8;
   transition: background-color, 0.3s;
 }
+
+#date-form {
+  flex-direction: column;
+}
+
+.datepicker-wrapper div > input{
+  margin: 30px 0;
+  width: 100%;
+  height: 2rem;
+  border: 1px solid #F8F8F8;
+  font-family: 'Roboto', 'Noto Sans JP';
+  font-size: 1.3rem;
+  text-align: center;
+}
+
 </style>

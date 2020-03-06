@@ -34,7 +34,8 @@ module.exports = {
 	*/
 	plugins: [
 		"~plugins/persistedstate",
-		'~plugins/vue-scrollto'
+		'~plugins/vue-scrollto',
+		{src: '~plugins/vue-datepicker', ssr: false},
 	],
 	/*
 	** Nuxt.js dev-modules
