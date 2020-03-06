@@ -8,7 +8,7 @@
         <!-- あとで:src="img"にする -->
         <!-- <img src="~/assets/img/png/ogp.png" alt="サムネイル"> -->
       </div>
-      <div class="sengsen-description">
+      <div class="sengen-description">
         <p class="sengen-title">{{ name }}</p>
         <div class="sengen-desc">
           <p>宣言pt: {{ hasp }}pt</p>

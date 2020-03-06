@@ -1,5 +1,10 @@
 <template>
   <div class="pagination">
+
+    <div class="pagination-container" v-if="one_only">
+      <div class="pagination-btn btn-active">1</div>
+    </div>
+
     <div class="pagination-container" v-if="right_only">
       <div class="pagination-btn btn-none"></div>
       <div class="pagination-btn btn-none"></div>
@@ -34,7 +39,8 @@
 export default {
   data () {
     return {
-      'right_only': true,
+      'one_only': false,
+      'right_only': false,
       'common': false,
       'left_only': false,
     }
@@ -44,6 +50,32 @@ export default {
     'current': Number
   },
   methods: {
+    judgeStyle: function() {
+      if(this.max == 1) {
+        this.one_only = true;
+        this.right_only = false;
+        this.common = false;
+        this.left_only = false;
+      }
+      else if(this.current == 1) {
+        this.one_only = false;
+        this.right_only = true;
+        this.common = false;
+        this.left_only = false;
+      }
+      else if (this.current == this.max) {
+        this.one_only = false;
+        this.right_only = false;
+        this.common = false;
+        this.left_only = true;
+      }
+      else {
+        this.one_only = false;
+        this.right_only = false;
+        this.common = true;
+        this.left_only = false;
+      }
+    },
     plusCurrent: async function() {
       this.scrollTop()
       await this.$emit('plusCurrent');
@@ -69,22 +101,11 @@ export default {
   },
   watch: {
     current: function() {
-      if(this.current == 1) {
-        this.right_only = true;
-        this.common = false;
-        this.left_only = false;
-      }
-      else if (this.current == this.max) {
-        this.right_only = false;
-        this.common = false;
-        this.left_only = true;
-      }
-      else {
-        this.right_only = false;
-        this.common = true;
-        this.left_only = false;
-      }
+      this.judgeStyle();
     }
+  },
+  mounted() {
+    this.judgeStyle();
   }
 }
 </script>
@@ -105,14 +126,30 @@ export default {
   justify-content: center;
   align-items: center;
   margin: 5px;
+  cursor: pointer;
 }
 
 .btn-none {
   background: transparent;
+  cursor: auto;
 }
 
 .btn-active {
   background: #F27435;
+  cursor: auto;
+}
+
+.pagination-btn:hover {
+  background: #25B2E8;
+  transition: background-color 0.3s;
+}
+
+.btn-active:hover {
+  background: #F27435;
+}
+
+.btn-none:hover {
+  background: transparent;
 }
 
 </style>
