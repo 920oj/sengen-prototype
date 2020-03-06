@@ -21,7 +21,8 @@
         <div class="form-submit-btn" @click="submitLogin()">
           <btnWithIcon title="ログイン" icon="img/icon/sign-in-alt.svg" />
         </div>
-      <p class="login-forgot-password">パスワードを忘れた方はこちら</p>
+      <p class="login-attention" @click="router.push('/register')">新規登録はこちら</p>
+      <p class="login-attention">パスワードを忘れた方はこちら</p>
     </div>    
   </div>
 </template>
@@ -131,8 +132,9 @@ export default {
   margin-top: 30px;
 }
 
-.login-forgot-password {
-  margin-top: 30px;
+.login-attention {
+  cursor: pointer;
+  margin: 30px 0;
   text-align: center;
 }
 </style>
