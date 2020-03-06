@@ -1,5 +1,5 @@
 <template>
-  <div class="register">
+  <div class="register" v-if="isLoaded">
     <div class="register-wrapper">
       <h2>新規登録</h2>
         <div class="register-form">
@@ -46,6 +46,7 @@ export default {
   },
   data() {
     return {
+      'isLoaded': false,
       'username': '',
       'mail': '',
       'password': '',
@@ -60,7 +61,15 @@ export default {
   },
   computed: {
     ...mapState('auth/login', ['user']),
-    ...mapGetters('auth/login', ['isAuthenticated'])
+    ...mapGetters('auth/login', ['isAuthenticated']),
+    judgeLogin: function() {
+      if(this.isAuthenticated) {
+        this.$router.push("/")
+      }
+      else {
+        this.isLoaded = true;
+      }
+    }
   },
   methods: {
     ...mapActions('auth/login', ['getUser']),
