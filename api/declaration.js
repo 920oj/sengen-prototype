@@ -220,48 +220,4 @@ router.post('/declarations/:declaration/support', function(req, res, next) {
 
 });
 
-//サンプルデータ取得用
-router.get('/test', function(req, res, next) {
-    let userName = 'コットン',
-        mail = 'chinoknct@gmail.com';
-
-    let newUser = new User({
-        uid: 0,
-        name: userName,
-        mail: mail,
-        point: 0,
-        declarations: [],
-        supports: []
-    });
-
-    newUser.save(function(err) {
-        dataCheck(User);
-    })
-
-    Declaration.find({}, function(err, result) {
-        let declarationLength = Object.keys(result).length,
-        declarationTitle = 'サンプルプロジェクト',
-        hasp = 1000;
-        
-        let newDeclaration = new Declaration({
-            index: declarationLength,
-            name: declarationTitle,
-            tag: 0,
-            thumnail: '~assets/img/png/ogp.png',
-            hasp: hasp,
-            declarer: newUser._id,
-            supporters: [],
-            deadline: Date.now(),
-        });
-        
-        newDeclaration.save(function(err) {
-            if(err) {
-                console.log(err);
-            }
-            dataCheck(Declaration);
-            res.send();
-        });
-    });
-})
-
 module.exports = router

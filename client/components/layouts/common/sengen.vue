@@ -12,7 +12,7 @@
         <p class="sengen-title">{{ name }}</p>
         <div class="sengen-desc">
           <p>宣言pt: {{ hasp }}pt</p>
-          <p>応援者数: {{ supporters }}人</p>
+          <p>応援者数: {{ supporters.length }}人</p>
           <p>残り: {{ deadline }}日</p>
         </div>
       </div>

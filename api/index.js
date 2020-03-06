@@ -8,9 +8,11 @@ app.use(bodyParser.urlencoded({extended: false}));
 const User = database.User;
 
 let declaration = require('./declaration');
-app.use('/', declaration);
 let auth = require('./auth');
+let sample = require('./sample');
+app.use('/', declaration);
 app.use('/', auth);
+app.use('/', sample);
 
 //検索
 app.post('/search/:keyword', function(req, res, next) {
