@@ -21,7 +21,7 @@
         <div class="form-submit-btn" @click="submitLogin()">
           <btnWithIcon title="ログイン" icon="img/icon/sign-in-alt.svg" />
         </div>
-      <p class="login-attention" @click="router.push('/register')">新規登録はこちら</p>
+      <p class="login-attention" @click="$router.push('/register')">新規登録はこちら</p>
       <p class="login-attention">パスワードを忘れた方はこちら</p>
     </div>    
   </div>
@@ -46,14 +46,27 @@ export default {
   },
   mounted() {
     firebase.auth().onAuthStateChanged((user) => {
-        const { uid, email, displayName } = user
-        this.getUser({ uid, email, displayName })
+      const { uid, email, displayName } = user
+      this.getUser({ uid, email, displayName })
     })
   },
   computed: {
     ...mapState('auth/login', ['user']),
     ...mapGetters('auth/login', ['isAuthenticated']),
-    
+    judge: function() {
+      this.judgeLogin();
+    }
+  },
+  methods: {
+    ...mapActions('auth/login', ['getUser']),
+    submitLogin: function() {
+      firebase.auth().signInWithEmailAndPassword(this.mail, this.password)
+        .then(user => {
+          this.$router.push("/")
+        }).catch((error) => {
+            console.log(error);
+        });
+    },
     judgeLogin: function() {
       if(this.isAuthenticated) {
         this.$router.push("/")
@@ -62,19 +75,6 @@ export default {
         this.isLoaded = true;
       }
     }
-  },
-  methods: {
-    ...mapActions('auth/login', ['getUser']),
-    submitLogin: function() {
-      //ここにバリデーションの処理を書く
-      // ここにログインのAPIのを叩く処理を書く
-      firebase.auth().signInWithEmailAndPassword(this.mail, this.password)
-        .then(user => {
-          this.$router.push("/")
-        }).catch((error) => {
-            console.log(error);
-        });
-      }
   }
 }
 </script>
