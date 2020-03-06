@@ -17,7 +17,7 @@ const s3 = new AWS.S3({
 });
 
 //multerおよびmulterS3の設定
-const profileImgUpload = multer({
+const imgUpload = multer({
     storage: multerS3({
         s3: s3,
         bucket: '自分のバケット',
@@ -32,7 +32,8 @@ const profileImgUpload = multer({
     fileFilter: function(req, file, cb) {
         checkFileType(file, cb);
     }
-  }).single('フォーム上のnameのパラメータ');
+//   }).single('フォーム上のnameのパラメータ');
+  }).single('file');
 
 //ファイルチェック
 function checkFileType (file, cb) {
