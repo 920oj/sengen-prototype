@@ -126,14 +126,30 @@ export default {
   justify-content: center;
   align-items: center;
   margin: 5px;
+  cursor: pointer;
 }
 
 .btn-none {
   background: transparent;
+  cursor: auto;
 }
 
 .btn-active {
   background: #F27435;
+  cursor: auto;
+}
+
+.pagination-btn:hover {
+  background: #25B2E8;
+  transition: background-color 0.3s;
+}
+
+.btn-active:hover {
+  background: #F27435;
+}
+
+.btn-none:hover {
+  background: transparent;
 }
 
 </style>
