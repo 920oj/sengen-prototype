@@ -3,16 +3,16 @@
     <div class="purchase-wrapper">
       <div class="purchase-title">
         <h2>ポイント購入</h2>
-        <p>ポイント残高: 0 pt</p>
+        <p>ポイント残高: {{point}}pt</p>
       </div>
       <div class="purchase-btn-wrapper">
-        <div class="purchase-btn">
+        <div class="purchase-btn" @click="plusPoints(1000)">
           <p>1,000pt (1,200円)</p>
         </div>
-        <div class="purchase-btn">
+        <div class="purchase-btn" @click="plusPoints(5000)">
           <p>5,000pt (5,500円）</p>
         </div>
-        <div class="purchase-btn">
+        <div class="purchase-btn" @click="plusPoints(10000)">
           <p>10,000pt (10,100円)</p>
         </div>
       </div>
@@ -26,7 +26,17 @@
 
 <script>
 export default {
-
+  data() {
+    return {
+      'point': 0,
+    }
+  },
+  methods: {
+    plusPoints(p) {
+      // ここにボタンクリック時の挙動を書いて下さい
+      this.point += p;
+    }
+  }
 }
 </script>
 
