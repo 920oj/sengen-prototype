@@ -118,6 +118,7 @@ export default {
   font-size: 0.8rem;
   color: #A1A1A1;
   line-height: 1.5;
+
 }
 
 </style>
