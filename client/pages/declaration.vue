@@ -60,12 +60,6 @@
             </div>
           </div>
         </div>
-
-        <div class="declaration-form-wrapper">
-          <p>詳細 <span class="required-ast">&lowast;</span></p>
-          <!-- ここにアップローダーのライブラリをいれる -->
-        </div>
-
       </div>
       <div class="declaration-confirm">
 
