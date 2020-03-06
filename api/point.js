@@ -10,7 +10,7 @@ const User = database.User;
 
 //ポイント購入
 router.post('/point/purchase/:price', function(req, res, next) {
-    let purchasePrice = req.body.purchasePrice,
+    let purchasePrice = req.params.price,
         loginMail = req.body.mail;
 
     User.findOne({ mail: loginMail }, function(err, result) {

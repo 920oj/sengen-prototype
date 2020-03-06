@@ -14,6 +14,7 @@ let Declaration = new Schema({
     index: Number,
     name: String,
     tag: Number,
+    thumbnail: String,
     overview: String,
     deadline: Date,
     detail: String,
