@@ -69,6 +69,9 @@
             </div>
           </div>
         </div>
+        <div class="confirm-btn">
+          <btnOnlyTitle title="確認" />
+        </div>
       </div>
       <div class="declaration-confirm">
 
@@ -79,7 +82,12 @@
 
 <script>
 import {ja} from 'vuejs-datepicker/dist/locale'
+import btnOnlyTitle from '~/components/ui/btn/btnOnlyTitle.vue'
+
 export default {
+  components: {
+    btnOnlyTitle,
+  },
   data() {
     return {
       dpFormat: 'yyyy/M/d(D)',
@@ -210,6 +218,13 @@ export default {
   font-family: 'Roboto', 'Noto Sans JP';
   font-size: 1.3rem;
   text-align: center;
+}
+
+.confirm-btn {
+  display: flex;
+  justify-content: center;
+  padding: 30px 0;
+  cursor: pointer;
 }
 
 </style>
