@@ -10,7 +10,7 @@ const User = database.User;
 
 //ポイント購入
 router.post('/point/purchase/:price', function(req, res, next) {
-    let purchasePrice = req.params.price,
+    let purchasePrice = Number(req.params.price),
         loginMail = req.body.mail;
 
     User.findOne({ mail: loginMail }, function(err, result) {
@@ -19,24 +19,24 @@ router.post('/point/purchase/:price', function(req, res, next) {
             if(err) {
                 console.log(err);
             }
-            res.redirect('/');
         });
+        res.send(result);
     });
 });
 
 //ポイント交換
 router.post('/point/exchange/:price', function(req, res, next) {
-    let exchangePrice = req.body.exchangePrice,
+    let exchangePrice = Number(req.params.price),
         loginMail = req.body.mail;
-    
+        
     User.findOne({ mail: loginMail },function(err, result) {
         result.point -= exchangePrice;
         result.save((err) => {
             if(err) {
                 console.log(err);
             }
-            res.send(result.point);
         });
+        res.send(result);
     });
 });
 

@@ -24,6 +24,8 @@
 </template>
 
 <script>
+import querystring from 'querystring'
+
 export default {
   data() {
     return {
@@ -67,7 +69,7 @@ export default {
           mail: userMail
         }))
         .then(result => {
-          this.point = result;
+          this.point = result.point;
         })
     }
   },
