@@ -26,6 +26,12 @@
         <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
       </div>
 
+      <div class="declarations-comment">
+        <h2>応援コメント</h2>
+        <Comment />
+        <Comment />
+        <Comment />
+      </div>
 
     </div>
   </div>
@@ -33,10 +39,12 @@
 
 <script>
 import Sengen from '~/components/layouts/common/sengen.vue'
+import Comment from '~/components/layouts/declarations/comment.vue'
 
 export default {
   components: {
     Sengen,
+    Comment,
   },
   data () {
     return {
@@ -68,6 +76,7 @@ export default {
   margin: 0 auto;
   max-width: 500px;
   padding: 10px;
+  padding-bottom: 30px;
   line-height: 1.5;
   margin-bottom: 30px;
 }
@@ -105,5 +114,17 @@ export default {
   display: flex;
   justify-content: center;
   margin-bottom: 30px;
+}
+
+.declarations-comment {
+  background: #FFF;
+  width: 90%;
+  margin: 0 auto;
+  padding: 10px;
+  margin-bottom :30px;
+}
+
+.declarations-comment h2 {
+  padding: 10px 0;
 }
 </style>
