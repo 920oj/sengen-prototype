@@ -15,7 +15,7 @@
         <p>{{item.overview}}</p>
       </div>
 
-      <div class="declarations-support-btn-wrapper">
+      <div class="declarations-support-btn-wrapper" v-if="status == 'notLogin'">
         <p>応援するには……</p>
         <div class="declarations-support-btn" @click="$router.push('/login')">
           ログイン
@@ -40,6 +40,7 @@
 <script>
 import Sengen from '~/components/layouts/common/sengen.vue'
 import Comment from '~/components/layouts/declarations/comment.vue'
+import { mapActions, mapState, mapGetters } from 'vuex'
 
 export default {
   components: {
@@ -58,7 +59,31 @@ export default {
         deadline: '2020-03-27',
         overview: '今独学でWeb開発の勉強をしているのですが、作りたいWebサービスを思いつきました！自分が成し遂げたことを「実績解除」という形でSNSに共有できるWebサービスです！これを3月末までに作りたいと思います！'
       },
-
+      status: 'notLogin', // 非ログイン: notLogin, 宣言者: declarator, 応援者: supporter, 非応援者: login
+    }
+  },
+  mounted () {
+    setTimeout( () => {
+      mapGetters('auth/login', ['isAuthenticated']);
+      console.log(this.isAuthenticated);
+      this.judgeLogin();
+    }, 0)
+  },
+  computed: {
+    ...mapGetters('auth/login', ['isAuthenticated']),
+  },
+  methods: {
+    judgeLogin: function() {
+      if(this.isAuthenticated == true) {
+        console.log('ログイン中です');
+        // ここにログイン時の処理
+        // if・その宣言をした人　→　user_data.declarations に this.$route.params.index がある
+        // else if・その宣言を応援している人　→　user_data.supports に this.$route.params.index がある
+        // else・その宣言を応援していない人　→　上記以外
+      }
+      else {
+        this.status = 'notLogin';
+      }
     }
   }
 }
