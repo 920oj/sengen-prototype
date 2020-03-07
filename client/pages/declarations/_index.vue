@@ -25,7 +25,7 @@
       <div class="declarations-support-btn-wrapper" v-if="status == 'login'">
         <p>この宣言を応援する！</p>
         <textarea class="declarations-support-message" cols="30" rows="10" placeholder="応援メッセージをここに入力"></textarea>
-        <div class="declarations-support-btn" @click="$router.push('/login')">
+        <div class="declarations-support-btn">
           応援！
         </div>
       </div>
@@ -33,6 +33,13 @@
       <div class="declarations-support-btn-wrapper" v-if="status == 'supporter'">
         <p style="color: #F27435; font-weight: 900; font-size: 1.3rem;">この宣言を応援しました！</p>
         <p>シェアして応援しよう！</p>
+      </div>
+
+      <div class="declarations-support-btn-wrapper" v-if="status == 'declarator'">
+        <p>期限までに完了報告をしましょう！</p>
+        <div class="declarations-support-btn">
+          完了報告
+        </div>
       </div>
 
       <div class="declarations-sns">
