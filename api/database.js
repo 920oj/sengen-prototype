@@ -7,7 +7,7 @@ let User = new Schema({
     mail: String,
     point: Number,
     thumbnail: String,
-    declarations: [{ type: String, ref: 'Declaration' }],
+    declarations: [{ type: Schema.Types.ObjectId, ref: 'Declaration' }],
     supports: [{ type: String, ref: 'Declaration' }]
 });
 

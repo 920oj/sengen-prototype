@@ -75,6 +75,18 @@ router.get('users/:user', function(req, res, next) {
     
 });
 
+//プロフィール取得
+router.post('/user', function(req, res, next) {
+    let mail = req.body.mail;
+    User.findOne({ mail: mail })
+    .populate('declarations')
+    .populate('supports')
+    .exec( function(err, result) {
+        console.log(result);
+        res.send(result);
+    })
+})
+
 //自分の宣言一覧確認
 app.get('users/:user/declarations', function(req, res, next) {
     loginCollation(declarations);

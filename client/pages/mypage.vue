@@ -3,7 +3,7 @@
     <div class="mypage-wrapper">
       <div class="mypage-user">
         <img src="https://i.imgur.com/4iwPsRe.png" alt="ユーザー画像" class="mypage-user-img">
-        <p class="mypage-username">ユーザー名</p>
+        <p class="mypage-username">{{ username }}</p>
       </div>
       <div class="mypage-settings">
         <h3>設定</h3>
@@ -41,10 +41,27 @@
 
 <script>
 import Sengen from '~/components/layouts/common/sengen.vue'
+import querystring from 'querystring'
 
 export default {
   components: {
     Sengen,
+  },
+  mounted() {
+    let localUserData = JSON.parse(localStorage.vuex),
+        userMail = localUserData.auth.login.user.email
+    console.log(localUserData.auth.login.user)
+      this.$axios
+          .$post(`/api/user`,
+            querystring.stringify({
+            mail: userMail
+          }))
+          .then(result => {
+            this.username = result.name
+            this.declaration_list = result.declarations
+            console.log(this.declaration_list)
+          })
+    console.log(userMail)
   },
   data () {
     return {
@@ -58,6 +75,7 @@ export default {
         deadline: '2020-03-27',
         overview: '今独学でWeb開発の勉強をしているのですが、作りたいWebサービスを思いつきました！自分が成し遂げたことを「実績解除」という形でSNSに共有できるWebサービスです！これを3月末までに作りたいと思います！'
       },
+      declaration_list: [],
       support_item: {
         tag: 'Web開発',
         name: 'これは応援している方の宣言です！',
@@ -67,7 +85,7 @@ export default {
         deadline: '2020-03-27',
         overview: '今独学でWeb開発の勉強をしているのですが、作りたいWebサービスを思いつきました！自分が成し遂げたことを「実績解除」という形でSNSに共有できるWebサービスです！これを3月末までに作りたいと思います！'
       },
-      
+      username: ''
     }
   },
 }

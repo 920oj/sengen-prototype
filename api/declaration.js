@@ -98,12 +98,42 @@ router.post('/declarations', function(req, res, next) {
                 if(err) {
                     console.log(err);
                 }
-                createDeclaration(result);
-                res.send();
+                createDeclaration(result, declarationLength);
             });
         });
             
-        function createDeclaration(result) {
+        function createDeclaration(result, length) {
+            const imageName = req.file;
+            // const imageLocation = req.file.location;
+            let newDeclaration = new Declaration({
+                index: declarationLength,
+                name: declarationTitle,
+                overview: overview,
+                tag: tag,
+                // thumbnail: imageLocation,
+                deadline: deadline,
+                thumbnail: '/_nuxt/client/assets/img/png/ogp.png',
+                hasp: hasp,
+                declarer: result._id,
+                supporter: [],
+            });
+            
+            newDeclaration.save(function(err) {
+                if(err) {
+                    console.log(err);
+                }
+                dataCheck(Declaration);
+            });
+
+            User.findOne({ mail: result.mail}, function(err, user) {
+                Declaration.findOne({ index: length }, function(err, declara) {
+                    result.declarations.push(declara._id)
+                    result.save(function(err) {
+                        res.send();
+                    })
+                    console.log(result);
+                })
+            })
             // imgUpload(req, res, function(err) {
                 // if(err) {
                 //   console.log(err);
@@ -112,29 +142,8 @@ router.post('/declarations', function(req, res, next) {
                 //         console.log('No File');
                 //     } else {
                         //ここで取得したデータをデータベースに保存
-                        const imageName = req.file;
-                        // const imageLocation = req.file.location;
-                        let newDeclaration = new Declaration({
-                            index: declarationLength,
-                            name: declarationTitle,
-                            overview: overview,
-                            tag: tag,
-                            deadline: deadline,
-                            // thumbnail: imageLocation,
-                            thumbnail: '/_nuxt/client/assets/img/png/ogp.png',
-                            hasp: hasp,
-                            declarer: result._id,
-                            supporter: [],
-                        });
-                    
-                        newDeclaration.save(function(err) {
-                            if(err) {
-                                console.log(err);
-                            }
-                            dataCheck(Declaration);
-                        });
-                    // }
-                // }
+            // }
+            // }
             // });
         }
     });
