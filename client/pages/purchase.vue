@@ -36,14 +36,11 @@ export default {
   mounted() {
     let localUserData = JSON.parse(localStorage.vuex),
         userMail = localUserData.auth.login.user.email
-    console.log(localUserData.auth.login.user)
       this.$axios
           .$get(`/api/users/${userMail}/points`)
           .then(result => {
-            console.log(result)
             this.point = result.point;
           })
-    console.log(userMail)
   },
   methods: {
     plusPoints(p) {
