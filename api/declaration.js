@@ -72,6 +72,7 @@ router.post('/declarations', function(req, res, next) {
             hasp = req.body.hasp,
             loginMail = req.body.mail,
             deadline = req.body.deadline;
+            console.log('deadline' + deadline)
 
         Category.findOne({ uid: tag }, function(err, result) {
             tag = result.name

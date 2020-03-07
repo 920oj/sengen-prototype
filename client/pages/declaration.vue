@@ -76,7 +76,7 @@
             />
           </client-only>
           <p v-show="!checkBefore">{{ deadline }}</p>
-          <input class="hiddenForm" type="text" name="deadline" v-model="deadline" />
+          <input class="hiddenForm" type="text" name="deadline" :value="deadline" />
         </div>
 
         <div class="declaration-form-wrapper" id="point-form">
@@ -131,6 +131,7 @@ export default {
       category: '',
       overview: '',
       deadline: '',
+      postDeadLine: '',
       hasp: 0,
       checkBefore: true,
       imgData: '',
@@ -164,6 +165,7 @@ export default {
       this.hasp += 10000
     },
     checkForm: function() {
+      this.postDeadLine = this.dateToString(this.deadline)
       this.checkBefore = false
     },
     postForm: function(e) {
@@ -174,6 +176,7 @@ export default {
       let preview = document.querySelector('#img')
       let file = document.querySelector('input[type=file]').files[0]
 
+      console.log(toString(this.postDeadLine))
       this.$axios.$post('/api/declarations', 
         querystring.stringify({
           title: this.title,
@@ -181,7 +184,7 @@ export default {
           overview: this.overview,
           hasp: this.hasp,
           mail: userMail,
-          deadline: this.deadline,
+          deadline: this.postDeadLine,
           thumbnail: file
         }))
         .then(result => {
@@ -189,6 +192,30 @@ export default {
           this.$router.push('/')
         })
     },
+    dateToString: function(date) {
+      let year_str = date.getFullYear(),
+          month_str = 1 + date.getMonth(),
+          day_str = date.getDate(),
+          hour_str = date.getHours(),
+          minute_str = date.getMinutes(),
+          second_str = date.getSeconds()
+ 
+      month_str = ('0' + month_str).slice(-2);
+      day_str = ('0' + day_str).slice(-2);
+      hour_str = ('0' + hour_str).slice(-2);
+      minute_str = ('0' + minute_str).slice(-2);
+      second_str = ('0' + second_str).slice(-2);
+      
+      let format_str = 'YYYY-MM-DD hh:mm:ss';
+      format_str = format_str.replace(/YYYY/g, year_str);
+      format_str = format_str.replace(/MM/g, month_str);
+      format_str = format_str.replace(/DD/g, day_str);
+      format_str = format_str.replace(/hh/g, hour_str);
+      format_str = format_str.replace(/mm/g, minute_str);
+      format_str = format_str.replace(/ss/g, second_str);
+      
+      return format_str;
+    }
   }
 }
 </script>
