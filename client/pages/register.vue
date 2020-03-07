@@ -58,24 +58,18 @@ export default {
         const { uid, email, displayName } = user
         this.getUser({ uid, email, displayName })
     })
+    setTimeout( () => { // localStorageからVuexストアに値が返ってきたら
+      mapGetters('auth/login', ['isAuthenticated']); // mapGettersでthis.isAuthenticatedに判定結果を入れて
+      this.judgeLogin(); // リダイレクト判定処理を行う
+    }, 0)
   },
   computed: {
     ...mapState('auth/login', ['user']),
     ...mapGetters('auth/login', ['isAuthenticated']),
-    judgeLogin: function() {
-      if(this.isAuthenticated) {
-        this.$router.push("/")
-      }
-      else {
-        this.isLoaded = true;
-      }
-    }
   },
   methods: {
     ...mapActions('auth/login', ['getUser']),
     submitRegister: async function() {
-      // ここにバリデーションの処理
-      // ここにログインの処理
       await this.firebaseCreate()
       await this.userCreate()
     },
@@ -96,6 +90,14 @@ export default {
         .then(result => {
           this.$router.push("/")
         })
+    },
+    judgeLogin: function() {
+      if(this.isAuthenticated) {
+        this.$router.push("/")
+      }
+      else {
+        this.isLoaded = true;
+      }
     }
   }
 }
