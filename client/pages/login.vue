@@ -71,12 +71,9 @@ export default {
     },
     judgeLogin: function() {
       if(this.isAuthenticated) {
-        console.log(this.isAuthenticated + '1')
-        console.log('トップページにリダイレクトします')
         this.$router.push("/")
       }
       else {
-        console.log(this.isAuthenticated + '2')
         this.isLoaded = true;
       }
     }
