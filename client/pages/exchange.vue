@@ -31,6 +31,18 @@ export default {
       'exchange_point': 0
     }
   },
+  mounted() {
+    let localUserData = JSON.parse(localStorage.vuex),
+        userMail = localUserData.auth.login.user.email
+    console.log(localUserData.auth.login.user)
+      this.$axios
+          .$get(`/api/users/${userMail}/points`)
+          .then(result => {
+            console.log(result)
+            this.point = result.point;
+          })
+    console.log(userMail)
+  },
   methods: {
     canExchange: function() {
       if (isNaN(this.exchange_point)) {
@@ -47,7 +59,16 @@ export default {
       }
     },
     exchange: function() {
-      // ここにクリックしたときの動作
+      let localUserData = JSON.parse(localStorage.vuex),
+      userMail = localUserData.auth.login.user.email
+      
+      this.$axios.$post(`/api/point/exchange/${this.exchange_point}`,
+        querystring.stringify({
+          mail: userMail
+        }))
+        .then(result => {
+          this.point = result;
+        })
     }
   },
 }

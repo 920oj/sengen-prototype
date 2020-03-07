@@ -20,7 +20,7 @@ let dataCheck = (collection) => {
 //サンプルデータ取得用
 router.get('/testdeclaration', function(req, res, next) {
     let userName = 'コットン',
-        mail = 'chinoknct@gmail.com';
+        mail = 'sample@gmail.com';
 
     let newUser = new User({
         uid: 0,

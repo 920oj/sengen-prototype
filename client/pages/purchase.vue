@@ -31,10 +31,31 @@ export default {
       'point': 0,
     }
   },
+  mounted() {
+    let localUserData = JSON.parse(localStorage.vuex),
+        userMail = localUserData.auth.login.user.email
+    console.log(localUserData.auth.login.user)
+      this.$axios
+          .$get(`/api/users/${userMail}/points`)
+          .then(result => {
+            console.log(result)
+            this.point = result.point;
+          })
+    console.log(userMail)
+  },
   methods: {
     plusPoints(p) {
       // ここにボタンクリック時の挙動を書いて下さい
-      this.point += p;
+      // this.point += p
+      let localUserData = JSON.parse(localStorage.vuex),
+          userMail = localUserData.auth.login.user.email
+      this.$axios.$post(`/api/point/exchange/${p}`,
+        querystring.stringify({
+          mail: userMail
+        }))
+        .then(result => {
+          this.point = result;
+        })
     }
   }
 }
