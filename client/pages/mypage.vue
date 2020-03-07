@@ -13,7 +13,7 @@
           <li>ポイント交換</li>
         </ul>
       </div>
-      <div class="mypage-declaration">
+      <div class="mypage-declaration" v-for="declaration_item in declaration_list" :key="declaration_item.key">
         <h3>自分の宣言</h3>
         <Sengen 
           :tag="declaration_item.tag" 
