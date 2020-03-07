@@ -21,7 +21,7 @@
         <div class="form-submit-btn" @click="submitLogin()">
           <btnWithIcon title="ログイン" icon="img/icon/sign-in-alt.svg" />
         </div>
-      <p class="login-attention" @click="router.push('/register')">新規登録はこちら</p>
+      <p class="login-attention" @click="$router.push('/register')">新規登録はこちら</p>
       <p class="login-attention">パスワードを忘れた方はこちら</p>
     </div>    
   </div>
@@ -45,15 +45,30 @@ export default {
     }
   },
   mounted() {
+    console.log(this.isAuthenticated);
     firebase.auth().onAuthStateChanged((user) => {
-        const { uid, email, displayName } = user
-        this.getUser({ uid, email, displayName })
+      const { uid, email, displayName } = user
+      this.getUser({ uid, email, displayName })
     })
+    setTimeout( () => { // localStorageからVuexストアに値が返ってきたら
+      mapGetters('auth/login', ['isAuthenticated']); // mapGettersでthis.isAuthenticatedに判定結果を入れて
+      this.judgeLogin(); // リダイレクト判定処理を行う
+    }, 0)
   },
   computed: {
     ...mapState('auth/login', ['user']),
     ...mapGetters('auth/login', ['isAuthenticated']),
-    
+  },
+  methods: {
+    ...mapActions('auth/login', ['getUser']),
+    submitLogin: function() {
+      firebase.auth().signInWithEmailAndPassword(this.mail, this.password)
+        .then(user => {
+          this.$router.push("/")
+        }).catch((error) => {
+            console.log(error);
+        });
+    },
     judgeLogin: function() {
       if(this.isAuthenticated) {
         this.$router.push("/")
@@ -62,19 +77,6 @@ export default {
         this.isLoaded = true;
       }
     }
-  },
-  methods: {
-    ...mapActions('auth/login', ['getUser']),
-    submitLogin: function() {
-      //ここにバリデーションの処理を書く
-      // ここにログインのAPIのを叩く処理を書く
-      firebase.auth().signInWithEmailAndPassword(this.mail, this.password)
-        .then(user => {
-          this.$router.push("/")
-        }).catch((error) => {
-            console.log(error);
-        });
-      }
   }
 }
 </script>

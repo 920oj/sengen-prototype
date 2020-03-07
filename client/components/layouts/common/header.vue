@@ -13,11 +13,11 @@
       <searchBar />
       <ul>
         <li class="header-menu-elem" @click="jumpTo('/')">トップ</li>
-        <li class="header-menu-elem" @click="jumpTo('/login')">ログイン</li>
-        <li class="header-menu-elem" @click="jumpTo('/search')">検索</li>
-        <li class="header-menu-elem">宣言する</li>
-        <li class="header-menu-elem" @click="jumpTo('/mypage')">マイページ</li>
-        <li class="header-menu-elem" >ポイント購入</li>
+        <li class="header-menu-elem" v-if="!isAuthenticated" @click="jumpTo('/login')">ログイン</li>
+        <li class="header-menu-elem" v-if="isAuthenticated" >宣言する</li>
+        <li class="header-menu-elem" v-if="isAuthenticated" @click="jumpTo('/mypage')">マイページ</li>
+        <li class="header-menu-elem" v-if="isAuthenticated" @click="jumpTo('/purchase')">ポイント購入</li>
+        <li class="header-menu-elem" v-if="isAuthenticated" @click="logout()">ログアウト</li>
       </ul>
     </div>
 
@@ -26,6 +26,8 @@
 
 <script>
 import searchBar from '~/components/ui/bar/searchBar.vue'
+import firebase from '~/plugins/firebase'
+import { mapActions, mapState, mapGetters } from 'vuex'
 
 function scroll_control(event) {
   event.preventDefault();
@@ -39,6 +41,9 @@ export default {
     return {
       'menuIsOpened': false,
     }
+  },
+  computed: {
+    ...mapGetters('auth/login', ['isAuthenticated']),
   },
   methods: {
     toggleMenu: function() {
@@ -59,6 +64,20 @@ export default {
         this.menuIsOpened = false;
       }
       this.$router.push(link);
+    },
+    logout: function() {
+      const self = this;
+      firebase.auth().signOut()
+      .then(() => {
+        console.log('ログアウトしました');  
+        self.$store.dispatch('auth/login/getUser', null)
+        document.removeEventListener("mousewheel", scroll_control, { passive: false });
+        document.removeEventListener('touchmove', scroll_control, { passive: false });
+        self.menuIsOpened = false;
+        self.$router.push('/');
+      }).catch((error) => {
+        console.log(error);
+      });
     }
   }
 }
