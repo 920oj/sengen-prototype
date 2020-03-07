@@ -26,17 +26,17 @@ router.post('/point/purchase/:price', function(req, res, next) {
 
 //ポイント交換
 router.post('/point/exchange/:price', function(req, res, next) {
-    let exchangePrice = req.body.price,
+    let exchangePrice = Number(req.params.price),
         loginMail = req.body.mail;
-    
+        
     User.findOne({ mail: loginMail },function(err, result) {
         result.point -= exchangePrice;
         result.save((err) => {
             if(err) {
                 console.log(err);
             }
-            res.send(result.point);
         });
+        res.send(result);
     });
 });
 

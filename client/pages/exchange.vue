@@ -69,7 +69,7 @@ export default {
           mail: userMail
         }))
         .then(result => {
-          this.point = result;
+          this.point = result.point;
         })
     }
   },
