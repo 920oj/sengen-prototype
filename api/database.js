@@ -6,6 +6,7 @@ let User = new Schema({
     name: String,
     mail: String,
     point: Number,
+    thumbnail: String,
     declarations: [{ type: Number, ref: 'Declaration' }],
     supports: [{ type: Number, ref: 'Declaration' }]
 });
@@ -13,10 +14,10 @@ let User = new Schema({
 let Declaration = new Schema({
     index: Number,
     name: String,
-    tag: Number,
+    tag: String,
     thumbnail: String,
     overview: String,
-    deadline: Date,
+    deadline: String,
     detail: String,
     declarer: { type: String, ref: 'User' },
     supporters: [{
