@@ -70,6 +70,10 @@ router.get('/users/:user/points', function(req, res, next) {
     })
 })
 
+//プロフィール取得
+router.get('users/:user', function(req, res, next) {
+    
+});
 
 //自分の宣言一覧確認
 app.get('users/:user/declarations', function(req, res, next) {

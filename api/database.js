@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 let User = new Schema({
-    uid: Number,
+    uid: String,
     name: String,
     mail: String,
     point: Number,
@@ -28,7 +28,8 @@ let Declaration = new Schema({
         comment: String
     }],
     hasp: Number,
-    report: String
+    report: String,
+    excution: String
 });
 
 let Category = new Schema({

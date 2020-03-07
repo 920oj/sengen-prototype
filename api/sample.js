@@ -77,4 +77,8 @@ router.get('/testcategory', function(req, res, next) {
     })
 });
 
+router.get('/token', function(req, res, next) {
+    
+})
+
 module.exports = router
