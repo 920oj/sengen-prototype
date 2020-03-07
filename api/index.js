@@ -10,9 +10,13 @@ const User = database.User;
 let declaration = require('./declaration');
 let auth = require('./auth');
 let sample = require('./sample');
+let user = require('./user');
+let point = require('./point');
 app.use('/', declaration);
 app.use('/', auth);
 app.use('/', sample);
+app.use('/', user);
+app.use('/', point);
 
 //検索
 app.post('/search/:keyword', function(req, res, next) {

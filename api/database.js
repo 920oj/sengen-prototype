@@ -22,6 +22,9 @@ let Declaration = new Schema({
     declarer: { type: String, ref: 'User' },
     supporters: [{
         detail: { type: Number, ref: 'User' },
+        name: String,
+        thumbnail: String,
+        timestamp: String,
         comment: String
     }],
     hasp: Number,

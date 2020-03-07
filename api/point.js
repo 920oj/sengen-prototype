@@ -25,7 +25,7 @@ router.post('/point/purchase/:price', function(req, res, next) {
 });
 
 //ポイント交換
-router.post('/point/exchange/:giftcard/:price', function(req, res, next) {
+router.post('/point/exchange/:price', function(req, res, next) {
     let exchangePrice = req.body.exchangePrice,
         loginMail = req.body.mail;
     
@@ -35,7 +35,7 @@ router.post('/point/exchange/:giftcard/:price', function(req, res, next) {
             if(err) {
                 console.log(err);
             }
-            res.redirect('/');
+            res.send(result.point);
         });
     });
 });

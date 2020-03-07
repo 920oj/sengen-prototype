@@ -53,16 +53,23 @@ function checkFileType (file, cb) {
 const User = database.User;
 
 function loginCollation (value) {
-    let loginMail = req.body.mail;
-    User.findOne({ mail: loginMail}, function(err, result) {
-        res.send(`result.${value}`);
+    // let loginMail = req.body.mail;
+    console.log(value)
+    User.findOne({ mail: value}, function(err, result) {
+        console.log(result);
+        return result;
     })
 }
 
 //ポイント確認
-app.get('users/:user/points', function(req, res, next) {
-    loginCollation(point);
+router.get('/users/:user/points', function(req, res, next) {
+    let user = req.params.user;
+    User.findOne({ mail: user}, function(err, result) {
+        console.log(result.point)
+        res.send(result);
+    })
 })
+
 
 //自分の宣言一覧確認
 app.get('users/:user/declarations', function(req, res, next) {
