@@ -22,6 +22,19 @@
         </div>
       </div>
 
+      <div class="declarations-support-btn-wrapper" v-if="status == 'login'">
+        <p>この宣言を応援する！</p>
+        <textarea class="declarations-support-message" cols="30" rows="10" placeholder="応援メッセージをここに入力"></textarea>
+        <div class="declarations-support-btn" @click="$router.push('/login')">
+          応援！
+        </div>
+      </div>
+
+      <div class="declarations-support-btn-wrapper" v-if="status == 'supporter'">
+        <p style="color: #F27435; font-weight: 900; font-size: 1.3rem;">この宣言を応援しました！</p>
+        <p>シェアして応援しよう！</p>
+      </div>
+
       <div class="declarations-sns">
         <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
       </div>
@@ -77,9 +90,9 @@ export default {
       if(this.isAuthenticated == true) {
         console.log('ログイン中です');
         // ここにログイン時の処理
-        // if・その宣言をした人　→　user_data.declarations に this.$route.params.index がある
-        // else if・その宣言を応援している人　→　user_data.supports に this.$route.params.index がある
-        // else・その宣言を応援していない人　→　上記以外
+        // if・その宣言をした人　→　user_data.declarations に this.$route.params.index がある　→　this.statusをdeclaratorに変更する
+        // else if・その宣言を応援している人　→　user_data.supports に this.$route.params.index がある　→　this.statusをsupporterに変更する
+        // else・その宣言を応援していない人　→　上記以外　→　this.statusをloginに変更する
       }
       else {
         this.status = 'notLogin';
@@ -117,6 +130,14 @@ export default {
 
 .declarations-support-btn-wrapper p {
   padding: 15px 0;
+}
+
+.declarations-support-message {
+  width: 90%;
+  margin: 0 auto;
+  border: 1px solid #F9F9F9;
+  resize: none;
+  margin: 15px 0;
 }
 
 .declarations-support-btn {
