@@ -2,7 +2,7 @@
   <div class="index">
     <Header />
     <div class="sengen-list">
-      <h2 class="sengen-list-title">現在遂行中の宣言</h2>
+      <h2 class="sengen-list-title" @click="$router.push('/login')">現在遂行中の宣言</h2>
       <!-- <Sengen category="Web開発" title="自分でWebサービスを立ち上げる！実績解除サービスを3月末までに作ります！" point="5000" supporter="15" expires="30" /> -->
       <Sengenarea :list="sengen_list" />
     </div>

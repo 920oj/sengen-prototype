@@ -45,17 +45,22 @@ export default {
     }
   },
   mounted() {
+    console.log(this.isAuthenticated);
     firebase.auth().onAuthStateChanged((user) => {
+      console.log('Firebase認証の変更を検知しました')
+      console.log(this.getUser())
       const { uid, email, displayName } = user
       this.getUser({ uid, email, displayName })
     })
+    mapGetters('auth/login', ['isAuthenticated'])
+    setTimeout( () => {
+      console.log('mountedの方での処理をします')
+      this.judgeLogin();
+    }, 0)
   },
   computed: {
     ...mapState('auth/login', ['user']),
     ...mapGetters('auth/login', ['isAuthenticated']),
-    judge: function() {
-      this.judgeLogin();
-    }
   },
   methods: {
     ...mapActions('auth/login', ['getUser']),
@@ -69,9 +74,12 @@ export default {
     },
     judgeLogin: function() {
       if(this.isAuthenticated) {
+        console.log(this.isAuthenticated + '1')
+        console.log('トップページにリダイレクトします')
         this.$router.push("/")
       }
       else {
+        console.log(this.isAuthenticated + '2')
         this.isLoaded = true;
       }
     }
