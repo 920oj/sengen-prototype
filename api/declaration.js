@@ -7,7 +7,9 @@ const AWS = require('aws-sdk');
 const multer = require('multer');
 const multerS3 = require('multer-s3');
 
-app.use(bodyParser.urlencoded({extended: false}));
+// app.use(bodyParser({limit: '50mb'}));
+app.use(bodyParser.urlencoded({extended: false, limit: '10mb'}));
+// app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
 const User = database.User;
 const Declaration = database.Declaration;
@@ -15,16 +17,16 @@ const Category = database.Category;
 
 //AWSのapikeyを入力
 const s3 = new AWS.S3({
-    accessKeyId: process.env.AWS_S3_ACCESS_KEY_ID, 
-    secretAccessKey: process.env.AWS_S3_SECRET_KEY,
-    Bucket: '自分のバケット'
+    accessKeyId: 'AKIASDNKRNVVQ3TRADHR',
+    secretAccessKey: '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',
+    Bucket: 'sengen-proto'
 });
 
 //multerおよびmulterS3の設定
 const imgUpload = multer({
     storage: multerS3({
         s3: s3,
-        bucket: '自分のバケット',
+        bucket: 'sengen-proto',
         metadata: function(req, file, cb) {
             cb(null, {fieldName: file.fieldname});
         },
@@ -61,6 +63,21 @@ let dataCheck = (collection) => {
     });
 };
 
+router.post('/upload', function(req, res, next) {
+    console.log(req.body);
+    imgUpload(req, res, function(err) {
+        if(err) {
+            console.log(err);
+        } else {
+            if (req.file === undefined) {
+                console.log('No File');
+            } else {
+                res.send();
+            }
+        }
+    })
+});
+
 //新規宣言作成
 router.post('/declarations', function(req, res, next) {
     
@@ -72,7 +89,7 @@ router.post('/declarations', function(req, res, next) {
             hasp = req.body.hasp,
             loginMail = req.body.mail,
             deadline = req.body.deadline;
-            console.log('deadline' + deadline)
+        console.log(req.body)
 
         Category.findOne({ uid: tag }, function(err, result) {
             tag = result.name

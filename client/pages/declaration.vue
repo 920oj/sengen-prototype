@@ -151,6 +151,11 @@ export default {
       if(file) {
         render.readAsDataURL(file)
       }
+      this.$axios
+          .$post('/api/upload')
+          .then(result => {
+            console.log(result)
+          })
     },
     resetPoint: function() {
       this.hasp = 0
@@ -172,20 +177,16 @@ export default {
       let params = new FormData(),
           localUserData = JSON.parse(localStorage.vuex),
           userMail = localUserData.auth.login.user.email
-
-      let preview = document.querySelector('#img')
-      let file = document.querySelector('input[type=file]').files[0]
-
-      console.log(toString(this.postDeadLine))
+      console.log(file)
       this.$axios.$post('/api/declarations', 
-        querystring.stringify({
+          querystring.stringify({
           title: this.title,
           category: this.category,
           overview: this.overview,
           hasp: this.hasp,
           mail: userMail,
           deadline: this.postDeadLine,
-          thumbnail: file
+          // thumbnail: file
         }))
         .then(result => {
           console.log('OK')
