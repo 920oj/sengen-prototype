@@ -24,6 +24,8 @@
 </template>
 
 <script>
+import querystring from 'querystring'
+
 export default {
   data() {
     return {

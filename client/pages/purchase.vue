@@ -25,6 +25,8 @@
 </template>
 
 <script>
+import querystring from 'querystring'
+
 export default {
   data() {
     return {
@@ -49,12 +51,12 @@ export default {
       // this.point += p
       let localUserData = JSON.parse(localStorage.vuex),
           userMail = localUserData.auth.login.user.email
-      this.$axios.$post(`/api/point/exchange/${p}`,
+      this.$axios.$post(`/api/point/purchase/${p}`,
         querystring.stringify({
           mail: userMail
         }))
         .then(result => {
-          this.point = result;
+          this.point = result.point;
         })
     }
   }
