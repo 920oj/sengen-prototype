@@ -18,6 +18,9 @@
             <input type="password" name="password" class="form-style" v-model="password" placeholder="パスワード" required>
           </div>
         </div>
+        <div class="login-error" v-if="error_message">
+          <p>{{error_message}}</p>
+        </div>
         <div class="form-submit-btn" @click="submitLogin()">
           <btnWithIcon title="ログイン" icon="img/icon/sign-in-alt.svg" />
         </div>
@@ -41,7 +44,8 @@ export default {
     return {
       'isLoaded': false,
       'mail': '',
-      'password': ''
+      'password': '',
+      'error_message': '',
     }
   },
   mounted() {
@@ -67,6 +71,20 @@ export default {
           this.$router.push("/")
         }).catch((error) => {
             console.log(error);
+            switch(error.code) {
+              case 'auth/invalid-email':
+                this.error_message = 'メールアドレスの形式が異なります。正しいメールアドレスを入力して下さい。'
+                break;
+              case  'auth/user-disabled': 
+                this.error_message = 'このアカウントは無効化されています。お問い合わせ下さい。'
+                break;
+              case 'auth/user-not-found':
+                this.error_message = 'メールアドレスか、パスワードが異なります。正しく入力して下さい。'
+                break;
+              case 'auth/wrong-password':
+                this.error_message = 'メールアドレスか、パスワードが異なります。正しく入力して下さい。'
+                break;
+            }
         });
     },
     judgeLogin: function() {
@@ -132,6 +150,11 @@ export default {
   padding: 15px 0;
   font-size: 1rem;
   border: 0;
+}
+
+.login-error {
+  margin: 15px 0;
+  color: #F27435;
 }
 
 .form-submit-btn {
