@@ -80,7 +80,6 @@ router.post('/declarations', function(req, res, next) {
                 if(err) {
                     console.log(err);
                 }
-                console.log(result)
                 createDeclaration(result);
                 res.send();
             });
@@ -96,14 +95,13 @@ router.post('/declarations', function(req, res, next) {
                 //     } else {
                         //ここで取得したデータをデータベースに保存
                         const imageName = req.file;
-                        console.log(imageName)
-                        console.log('result' + result)
                         // const imageLocation = req.file.location;
                         let newDeclaration = new Declaration({
                             index: declarationLength,
                             name: declarationTitle,
                             overview: overview,
                             tag: tag,
+                            deadline: deadline,
                             // thumbnail: imageLocation,
                             thumbnail: '/_nuxt/client/assets/img/png/ogp.png',
                             hasp: hasp,

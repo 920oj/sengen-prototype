@@ -164,30 +164,15 @@ export default {
       this.hasp += 10000
     },
     checkForm: function() {
-      console.log(this.title)
-      console.log(this.category)
-      console.log(this.overview)
-      console.log(this.deadline)
-      console.log(this.hasp)
       this.checkBefore = false
     },
     postForm: function(e) {
       let params = new FormData(),
           localUserData = JSON.parse(localStorage.vuex),
           userMail = localUserData.auth.login.user.email
-          console.log(localStorage.vuex)
-          console.log(userMail)
 
       let preview = document.querySelector('#img')
       let file = document.querySelector('input[type=file]').files[0]
-
-      // params.append('title', this.title)
-      // params.append('category', this.category)
-      // params.append('overview', this.overview)
-      // params.append('deadline', this.deadline)
-      // params.append('hasp', this.hasp)
-      // params.append('mail', userMail)
-      // params.append('file', this.fileSelectDom)
 
       this.$axios.$post('/api/declarations', 
         querystring.stringify({
@@ -196,6 +181,7 @@ export default {
           overview: this.overview,
           hasp: this.hasp,
           mail: userMail,
+          deadline: this.deadline,
           thumbnail: file
         }))
         .then(result => {

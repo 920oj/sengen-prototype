@@ -17,7 +17,7 @@ let Declaration = new Schema({
     tag: String,
     thumbnail: String,
     overview: String,
-    deadline: Date,
+    deadline: String,
     detail: String,
     declarer: { type: String, ref: 'User' },
     supporters: [{
