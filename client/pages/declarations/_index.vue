@@ -61,6 +61,7 @@
 import Sengen from '~/components/layouts/common/sengen.vue'
 import Comment from '~/components/layouts/declarations/comment.vue'
 import { mapActions, mapState, mapGetters } from 'vuex'
+import querystring from 'querystring'
 
 export default {
   components: {
@@ -85,7 +86,7 @@ export default {
   mounted () {
     setTimeout( () => {
       mapGetters('auth/login', ['isAuthenticated']);
-      console.log(this.isAuthenticated);
+      // console.log(this.isAuthenticated);
       this.judgeLogin();
     }, 0)
   },
@@ -98,12 +99,37 @@ export default {
         console.log('ログイン中です');
         // ここにログイン時の処理
         // if・その宣言をした人　→　user_data.declarations に this.$route.params.index がある　→　this.statusをdeclaratorに変更する
-        // else if・その宣言を応援している人　→　user_data.supports に this.$route.params.index がある　→　this.statusをsupporterに変更する
-        // else・その宣言を応援していない人　→　上記以外　→　this.statusをloginに変更する
-      }
-      else {
+        let localUserData = JSON.parse(localStorage.vuex),
+            userMail = localUserData.auth.login.user.email
+        this.$axios
+            .post(`/api/declarations/${this.$route.params.index}`,
+              querystring.stringify({
+              mail: userMail
+            }))
+            .then( result => {
+              switch(result.data.status) {
+                case 'declarer':
+                  this.status = 'declarer'
+                  console.log(this.status)
+                  break
+                case 'supporter':
+                  this.status = 'supporter'
+                  console.log(this.status)
+                  break
+                default:
+                  this.status = 'login'
+                  console.log(this.status)
+                  break
+              }
+              this.item = result.data
+              console.log(result.data.status)
+            })
+      } else {
         this.status = 'notLogin';
       }
+        // else if・その宣言を応援している人　→　user_data.supports に this.$route.params.index がある　→　this.statusをsupporterに変更する
+        // else・その宣言を応援していない人　→　上記以外　→　this.statusをloginに変更する
+      
     }
   }
 }

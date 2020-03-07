@@ -7,8 +7,8 @@ let User = new Schema({
     mail: String,
     point: Number,
     thumbnail: String,
-    declarations: [{ type: Number, ref: 'Declaration' }],
-    supports: [{ type: Number, ref: 'Declaration' }]
+    declarations: [{ type: String, ref: 'Declaration' }],
+    supports: [{ type: String, ref: 'Declaration' }]
 });
 
 let Declaration = new Schema({
@@ -21,7 +21,7 @@ let Declaration = new Schema({
     detail: String,
     declarer: { type: String, ref: 'User' },
     supporters: [{
-        detail: { type: Number, ref: 'User' },
+        detail: { type: String, ref: 'User' },
         name: String,
         thumbnail: String,
         timestamp: String,
