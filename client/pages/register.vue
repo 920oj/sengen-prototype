@@ -26,6 +26,9 @@
             <input type="password" name="password" class="form-style" v-model="password" placeholder="パスワード" required>
           </div>
         </div>
+        <div class="login-error" v-if="error_message">
+          <p>{{ error_message }}</p>
+        </div>
         <div class="form-submit-btn" @click="submitRegister()">
           <btnWithIcon title="新規登録" icon="img/icon/sign-in-alt.svg" />
         </div>
@@ -50,7 +53,8 @@ export default {
       'username': '',
       'mail': '',
       'password': '',
-      'uid': ''
+      'uid': '',
+      'error_message': ''
     }
   },
   mounted() {
@@ -79,6 +83,20 @@ export default {
         })
         .catch(error => {
           console.log(error)
+          switch(error.code){
+            case 'auth / email-already-in-use':
+              this.error_message = 'このメールアドレスは既に登録済みです。別のメールアドレスを入力してください。'
+              break
+            case 'auth / invalid-email':
+              this.error_message = '有効なメールアドレスではありません。有効なメールアドレスを入力してください。'
+              break
+            case 'auth / operation-not-allowed':
+              this.error_message = 'このアカウントは無効化されています。お問い合わせ下さい。'
+              break
+            case 'auth / weak-password':
+              this.error_message = 'パスワード強度が十分ではありません。6文字以上のパスワードを入力してください。'
+              break
+          }
         })
     },
     userCreate: function() {
@@ -157,6 +175,11 @@ export default {
 
 .form-submit-btn {
   margin-top: 30px;
+}
+
+.login-error {
+  margin: 15px 0;
+  color: #F27435;
 }
 
 </style>

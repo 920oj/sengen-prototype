@@ -81,6 +81,7 @@ export default {
         overview: '今独学でWeb開発の勉強をしているのですが、作りたいWebサービスを思いつきました！自分が成し遂げたことを「実績解除」という形でSNSに共有できるWebサービスです！これを3月末までに作りたいと思います！'
       },
       declaration_list: [],
+      support_list: [],
       support_item: {
         tag: 'Web開発',
         name: 'これは応援している方の宣言です！',
