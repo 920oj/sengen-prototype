@@ -11,7 +11,7 @@
         <div class="sengen-desc">
           <p>宣言pt: {{ hasp }}pt</p>
           <p>応援者数: {{ supporters.length }}人</p>
-          <p>残り: {{ deadline }}日</p>
+          <p>終了: {{ diffDeadline() }}</p>
         </div>
       </div>
     </div>
@@ -19,6 +19,12 @@
 </template>
 
 <script>
+import moment from 'moment';
+import 'moment-range';
+import 'moment-timezone';
+moment.tz.setDefault('Asia/Tokyo')
+moment.locale('ja')
+
 export default {
   props: [
     'tag',
@@ -28,7 +34,12 @@ export default {
     'supporters',
     'deadline',
     'index',
-  ]
+  ],
+  methods: {
+    diffDeadline: function() {
+      return moment(this.deadline).format('MMMDo');
+    }
+  }
 }
 </script>
 
