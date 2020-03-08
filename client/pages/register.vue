@@ -75,25 +75,25 @@ export default {
     ...mapActions('auth/login', ['getUser']),
     submitRegister: async function() {
       await this.firebaseCreate()
-      await this.userCreate()
     },
     firebaseCreate: function() {
       firebase.auth().createUserWithEmailAndPassword(this.mail, this.password)
         .then((user) => {
+          this.userCreate()
         })
         .catch(error => {
           console.log(error)
           switch(error.code){
-            case 'auth / email-already-in-use':
+            case 'auth/email-already-in-use':
               this.error_message = 'このメールアドレスは既に登録済みです。別のメールアドレスを入力してください。'
               break
-            case 'auth / invalid-email':
+            case 'auth/invalid-email':
               this.error_message = '有効なメールアドレスではありません。有効なメールアドレスを入力してください。'
               break
-            case 'auth / operation-not-allowed':
+            case 'auth/operation-not-allowed':
               this.error_message = 'このアカウントは無効化されています。お問い合わせ下さい。'
               break
-            case 'auth / weak-password':
+            case 'auth/weak-password':
               this.error_message = 'パスワード強度が十分ではありません。6文字以上のパスワードを入力してください。'
               break
           }
