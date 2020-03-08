@@ -22,6 +22,7 @@
           :thumbnail="declaration_item.thumbnail"
           :supporters="declaration_item.supporters" 
           :deadline="declaration_item.deadline" 
+          :index="declaration_item.index"
         />
       </div>
       <div class="mypage-declaration" v-for="support_item in support_list" :key="support_item.key">
@@ -33,6 +34,7 @@
           :thumbnail="support_item.thumbnail"
           :supporters="support_item.supporters" 
           :deadline="support_item.deadline" 
+          :index="support_item.index"
         />
       </div>
     </div>
