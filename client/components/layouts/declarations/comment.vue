@@ -5,7 +5,7 @@
       <div class="comment-text">
         <div class="comment-title">
           <p>{{ name }}</p>
-          <p>{{ timestamp }}</p>
+          <p>{{ diffTimeStamp() }}</p>
         </div>
         <div class="comment-body">
           <p>{{ comment }}</p>
@@ -16,13 +16,24 @@
 </template>
 
 <script>
+import moment from 'moment';
+import 'moment-range';
+import 'moment-timezone';
+moment.tz.setDefault('Asia/Tokyo')
+moment.locale('ja')
+
 export default {
   props: [
     'name',
     'timestamp',
     'comment',
     'thumbnail'
-  ]
+  ],
+  methods: {
+    diffTimeStamp: function() {
+      return moment(this.timestamp).format('MMMDo');
+    }
+  }
 }
 </script>
 

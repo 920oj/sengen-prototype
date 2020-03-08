@@ -6,6 +6,11 @@ const database = require('./database.js');
 const AWS = require('aws-sdk');
 const multer = require('multer');
 const multerS3 = require('multer-s3');
+const moment = require('moment');
+import 'moment-range';
+import 'moment-timezone';
+moment.tz.setDefault('Asia/Tokyo');
+moment.locale('ja');
 
 // app.use(bodyParser({limit: '50mb'}));
 app.use(bodyParser.urlencoded({extended: false, limit: '10mb'}));
@@ -304,12 +309,13 @@ router.post('/declarations/:declaration/support', function(req, res, next) {
             User.findOne({ mail: receiveMail })
             .populate('supports')
             .exec( function(err, user) {
-                let newSupporter = {}
-                newSupporter.detail = user._id,
-                newSupporter.name = user.name,
-                newSupporter.thumbnail = '/_nuxt/client/assets/img/png/ogp.png',
-                newSupporter.timestamp = Date.now(),
-                newSupporter.comment = receiveComment
+                let dateNow = moment(),
+                    newSupporter = {};
+                newSupporter.detail = user._id;
+                newSupporter.name = user.name;
+                newSupporter.thumbnail = '/_nuxt/client/assets/img/png/ogp.png';
+                newSupporter.timestamp = dateNow.format();
+                newSupporter.comment = receiveComment;
                 declaration.supporters.push(newSupporter);
                 declaration.save(function(err) {
                     if(err) {
