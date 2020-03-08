@@ -10,10 +10,11 @@
     </div>
 
     <div class="header-menu" v-if="menuIsOpened">
-      <searchBar />
+      <!-- <searchBar /> -->
       <ul>
         <li class="header-menu-elem" @click="jumpTo('/')">トップ</li>
         <li class="header-menu-elem" v-if="!isAuthenticated" @click="jumpTo('/login')">ログイン</li>
+        <li class="header-menu-elem" @click="jumpTo('/search')">検索</li>
         <li class="header-menu-elem" v-if="isAuthenticated" @click="jumpTo('/declaration')" >宣言する</li>
         <li class="header-menu-elem" v-if="isAuthenticated" @click="jumpTo('/mypage')">マイページ</li>
         <li class="header-menu-elem" v-if="isAuthenticated" @click="jumpTo('/purchase')">ポイント購入</li>
