@@ -6,7 +6,7 @@
             />
         </div>
         <div class="search-data">
-            <!-- <SengenArea :list="search_list" /> -->
+            <SengenArea :list="search_list" />
         </div>
     </div>
 </template>
@@ -32,11 +32,15 @@ export default {
             this.searchPost()
         },
         searchPost: function() {
+            console.log(this.searchData)
             let search_list = this.$axios
-                                .$post(`/api/search/${this.searchData}`)
-                                .then(result => {
-                                    this.search_list = result
-                                })
+                .$post(`/api/search/${this.searchData}`)
+                .then(result => {
+                    console.log(typeof(result))
+                    // let receiveData = JSON.parse(result)
+                    this.search_list = result
+                    console.log(result)
+                })
         }
     },
 }
