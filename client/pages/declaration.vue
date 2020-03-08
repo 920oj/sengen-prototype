@@ -37,7 +37,7 @@
               <option value="12">ヘルスケア</option>
               <option value="13">その他</option>
             </select>
-            <p v-show="!checkBefore">{{ category }}</p>
+            <p v-show="!checkBefore">{{ category_list[category] }}</p>
           </div>
         </div>
 
@@ -61,8 +61,8 @@
 
         <div class="declaration-form-wrapper" id="date-form">
           <p>終了日 <span class="required-ast">&lowast;</span></p>
-          <client-only v-show="checkBefore">
-            <date-picker class="datepicker-wrapper" 
+          <client-only>
+            <date-picker class="datepicker-wrapper" v-show="checkBefore"
               :disabled-dates="dpDisabledDates"
               :language="dpLocale"
               :format="dpFormat"
@@ -70,7 +70,7 @@
               v-model="deadline"
             />
           </client-only>
-          <p v-show="!checkBefore">{{ deadline }}</p>
+          <p style="text-align: center; margin: 30px 0;" v-show="!checkBefore">{{ displayDate() }}</p>
           <input class="hiddenForm" type="text" name="deadline" :value="deadline" />
         </div>
 
@@ -96,6 +96,7 @@
         <div class="confirm-btn" @click="checkForm()" v-show="checkBefore">
           <btnOnlyTitle title="確認"/>
         </div>
+        <p style="color: #F27435; padding-bottom: 30px; text-align: center;" v-if="formError">入力内容に誤りがあります。</p>
         <div class="confirm-comment" v-show="!checkBefore">
           <p>以上の内容でよろしいですか？</p>
         </div>
@@ -113,6 +114,11 @@
 import {ja} from 'vuejs-datepicker/dist/locale'
 import btnOnlyTitle from '~/components/ui/btn/btnOnlyTitle.vue'
 import querystring from 'querystring'
+import moment from 'moment';
+import 'moment-range';
+import 'moment-timezone';
+moment.tz.setDefault('Asia/Tokyo')
+moment.locale('ja')
 
 export default {
   components: {
@@ -132,10 +138,27 @@ export default {
       postDeadLine: '',
       hasp: 0,
       checkBefore: true,
+      formError: false,
       imgData: '',
       image: '',
       imgName: '',
-      uploadFile: ''
+      uploadFile: '',
+      category_list: [
+        'アート',
+        'プロダクト',
+        'テクノロジー',
+        '音楽',
+        'ゲーム',
+        '書籍',
+        '映像',
+        'スポーツ',
+        'ビジネス',
+        'ファッション',
+        'アニメ',
+        '飲食',
+        'ヘルスケア',
+        'その他'
+      ],
     }
   },
   methods: {
@@ -161,9 +184,25 @@ export default {
     increasePoint: function(p) {
       this.hasp += p
     },
+    displayDate: function() {
+      return moment(this.deadline).format('YYYY年MM月DD日(ddd)');
+    },
     checkForm: function() {
-      this.postDeadLine = this.dateToString(this.deadline)
-      this.checkBefore = false
+      if(this.title == '' || this.category == '' || this.overview == '' || this.deadline == '' || this.hasp == 0) {
+        this.formError = true
+      }
+      else {
+        this.postDeadLine = this.dateToString(this.deadline)
+        this.formError = false
+        this.checkBefore = false
+        this.scrollTop()
+      }
+    },
+    scrollTop: function() {
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      })
     },
     postForm: function(e) {
       let params = new FormData(),
