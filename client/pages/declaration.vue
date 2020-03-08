@@ -20,30 +20,24 @@
             <p>カテゴリー <span class="required-ast">&lowast;</span> </p>
           </div>
           <div class="declaration-form">
-            <input v-show="checkBefore" type="text" name="category" class="text-form" v-model="category">
-            <p v-show="!checkBefore">{{ category }}</p>
-            <!-- 選ぶやつに変更する -->
-            <!-- <ul class="category-menu">
-              <li class="menu-single">
-                <a class="init-bottom">カテゴリーを選択</a>
-                <ul class="menu-dropdown">
-                  <li><p>アート</p></li>
-                  <li><p>プロダクト</p></li>
-                  <li><p>テクノロジー</p></li>
-                  <li><p>音楽</p></li>
-                  <li><p>ゲーム</p></li>
-                  <li><p>書籍</p></li>
-                  <li><p>映像</p></li>
-                  <li><p>スポーツ</p></li>
-                  <li><p>ビジネス</p></li>
-                  <li><p>ファッション</p></li>
-                  <li><p>アニメ</p></li>
-                  <li><p>飲食</p></li>
-                  <li><p>ヘルスケア</p></li>
-                  <li><p>その他</p></li>
-                </ul>
-              </li>
-            </ul> -->
+            <!-- <input v-show="checkBefore" type="text" name="category" class="text-form" v-model="category"> -->
+            <select v-show="checkBefore" v-model="category" class="declaration-category">
+              <option value="0">アート</option>
+              <option value="1">プロダクト</option>
+              <option value="2">テクノロジー</option>
+              <option value="3">音楽</option>
+              <option value="4">ゲーム</option>
+              <option value="5">書籍</option>
+              <option value="6">映像</option>
+              <option value="7">スポーツ</option>
+              <option value="8">ビジネス</option>
+              <option value="9">ファッション</option>
+              <option value="10">アニメ</option>
+              <option value="11">飲食</option>
+              <option value="12">ヘルスケア</option>
+              <option value="13">その他</option>
+            </select>
+            <p v-show="!checkBefore">{{ category_list[category] }}</p>
           </div>
         </div>
 
@@ -67,15 +61,16 @@
 
         <div class="declaration-form-wrapper" id="date-form">
           <p>終了日 <span class="required-ast">&lowast;</span></p>
-          <client-only v-show="checkBefore">
-            <date-picker class="datepicker-wrapper" 
+          <client-only>
+            <date-picker class="datepicker-wrapper" v-show="checkBefore"
+              :disabled-dates="dpDisabledDates"
               :language="dpLocale"
               :format="dpFormat"
               placeholder="日付を選択"
               v-model="deadline"
             />
           </client-only>
-          <p v-show="!checkBefore">{{ deadline }}</p>
+          <p style="text-align: center; margin: 30px 0;" v-show="!checkBefore">{{ displayDate() }}</p>
           <input class="hiddenForm" type="text" name="deadline" :value="deadline" />
         </div>
 
@@ -87,13 +82,13 @@
             <div class="point-btn" @click="resetPoint()">
               <p>リセット</p>
             </div>
-            <div class="point-btn" @click="countPoint1000()">
+            <div class="point-btn" @click="increasePoint(1000)">
               <p>+1000</p>
             </div>
-            <div class="point-btn" @click="countPoint5000()">
+            <div class="point-btn" @click="increasePoint(5000)">
               <p>+5000</p>
             </div>
-            <div class="point-btn" @click="countPoint10000()">
+            <div class="point-btn" @click="increasePoint(10000)">
               <p>+10000</p>
             </div>
           </div>
@@ -101,6 +96,7 @@
         <div class="confirm-btn" @click="checkForm()" v-show="checkBefore">
           <btnOnlyTitle title="確認"/>
         </div>
+        <p style="color: #F27435; padding-bottom: 30px; text-align: center;" v-if="formError">入力内容に誤りがあります。</p>
         <div class="confirm-comment" v-show="!checkBefore">
           <p>以上の内容でよろしいですか？</p>
         </div>
@@ -118,6 +114,11 @@
 import {ja} from 'vuejs-datepicker/dist/locale'
 import btnOnlyTitle from '~/components/ui/btn/btnOnlyTitle.vue'
 import querystring from 'querystring'
+import moment from 'moment';
+import 'moment-range';
+import 'moment-timezone';
+moment.tz.setDefault('Asia/Tokyo')
+moment.locale('ja')
 
 export default {
   components: {
@@ -125,6 +126,9 @@ export default {
   },
   data() {
     return {
+      dpDisabledDates: {
+        to: new Date(),
+      },
       dpFormat: 'yyyy/M/d(D)',
       dpLocale: ja,
       title: '',
@@ -134,10 +138,27 @@ export default {
       postDeadLine: '',
       hasp: 0,
       checkBefore: true,
+      formError: false,
       imgData: '',
       image: '',
       imgName: '',
-      uploadFile: ''
+      uploadFile: '',
+      category_list: [
+        'アート',
+        'プロダクト',
+        'テクノロジー',
+        '音楽',
+        'ゲーム',
+        '書籍',
+        '映像',
+        'スポーツ',
+        'ビジネス',
+        'ファッション',
+        'アニメ',
+        '飲食',
+        'ヘルスケア',
+        'その他'
+      ],
     }
   },
   methods: {
@@ -160,18 +181,28 @@ export default {
     resetPoint: function() {
       this.hasp = 0
     },
-    countPoint1000: function() {
-      this.hasp += 1000
+    increasePoint: function(p) {
+      this.hasp += p
     },
-    countPoint5000: function() {
-      this.hasp += 5000
-    },
-    countPoint10000: function() {
-      this.hasp += 10000
+    displayDate: function() {
+      return moment(this.deadline).format('YYYY年MM月DD日(ddd)');
     },
     checkForm: function() {
-      this.postDeadLine = this.dateToString(this.deadline)
-      this.checkBefore = false
+      if(this.title == '' || this.category == '' || this.overview == '' || this.deadline == '' || this.hasp == 0) {
+        this.formError = true
+      }
+      else {
+        this.postDeadLine = this.dateToString(this.deadline)
+        this.formError = false
+        this.checkBefore = false
+        this.scrollTop()
+      }
+    },
+    scrollTop: function() {
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      })
     },
     postForm: function(e) {
       let params = new FormData(),
@@ -269,6 +300,13 @@ export default {
 .required-ast {
   color: #F27435;
   font-weight: 900;
+}
+
+.declaration-category {
+  width: 100%;
+  height: 2rem;
+  border: 1px solid #F8F8F8;
+  font-family: 'Roboto', 'Noto Sans JP';
 }
 
 #point-form {
