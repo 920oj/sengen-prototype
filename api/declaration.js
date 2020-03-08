@@ -222,7 +222,7 @@ router.post('/declarations/:declaration', function(req, res, next) {
                     updateData.declarer.uid = null;
                     updateData.declarer.mail = null;
                     updateData.declarer.point = null;
-                    updateData.declarer.supports = null;
+                    // updateData.declarer.supports = null;
                     updateData.status = 'declarer';
                     res.send(updateData);
                     console.log(toString(user._id))
@@ -234,7 +234,7 @@ router.post('/declarations/:declaration', function(req, res, next) {
                         updateData.declarer.uid = null;
                         updateData.declarer.mail = null;
                         updateData.declarer.point = null;
-                        updateData.declarer.supports = null;
+                        // updateData.declarer.supports = null;
                         if(err) {
                             console.log(err);
                         }

@@ -1,14 +1,14 @@
 <template>
   <div class="comment">
     <div class="comment-wrapper">
-      <div class="comment-img"></div>
+      <div class="comment-img" :style="`background-image: url(${thumbnail})`"></div>
       <div class="comment-text">
         <div class="comment-title">
-          <p>おーじぇい さん</p>
-          <p>2020/3/1 14:54</p>
+          <p>{{ name }}</p>
+          <p>{{ timestamp }}</p>
         </div>
         <div class="comment-body">
-          <p>頑張れ！！！</p>
+          <p>{{ comment }}</p>
         </div>
       </div>
     </div>
@@ -17,7 +17,12 @@
 
 <script>
 export default {
-
+  props: [
+    'name',
+    'timestamp',
+    'comment',
+    'thumbnail'
+  ]
 }
 </script>
 
@@ -35,7 +40,7 @@ export default {
 
 .comment-img {
   flex: 1;
-  background-image: url('~assets/img/png/ogp.png');
+  /* background-image: url('~assets/img/png/ogp.png'); */
   background-size: cover;
   background-position: center center;
   padding-top: 25%;
