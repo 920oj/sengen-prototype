@@ -7,6 +7,7 @@
               :thumbnail="item.thumbnail"
               :supporters="item.supporters" 
               :deadline="item.deadline" 
+              :index="item.index"
       />
     </div>
     <div class="top-sengen-pagination">

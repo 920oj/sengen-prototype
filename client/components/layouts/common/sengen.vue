@@ -1,6 +1,6 @@
 <template>
   <div class="sengen">
-    <div class="sengen-wrapper">
+    <div class="sengen-wrapper" @click="$router.push(`/declarations/${index}`)" >
       <div class="sengen-category">
         {{ tag }}
       </div>
@@ -27,6 +27,7 @@ export default {
     'hasp',
     'supporters',
     'deadline',
+    'index',
   ]
 }
 </script>
@@ -36,6 +37,7 @@ export default {
   margin: 30px auto;
   width: 95%;
   max-width: 500px;
+  cursor: pointer;
 }
 
 .sengen-category {
