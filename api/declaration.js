@@ -22,9 +22,9 @@ const Category = database.Category;
 
 //AWSのapikeyを入力
 const s3 = new AWS.S3({
-    accessKeyId: 'AKIASDNKRNVVQ3TRADHR',
-    secretAccessKey: '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',
-    Bucket: 'sengen-proto'
+    accessKeyId: '',
+    secretAccessKey: '',
+    Bucket: ''
 });
 
 //multerおよびmulterS3の設定
