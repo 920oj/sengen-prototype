@@ -9,8 +9,8 @@
         <h3>設定</h3>
         <ul>
           <li>プロフィール変更</li>
-          <li>ポイント購入</li>
-          <li>ポイント交換</li>
+          <li @click="$router.push('/purchase')">ポイント購入</li>
+          <li @click="$router.push('/exchange')">ポイント交換</li>
         </ul>
       </div>
       <div class="mypage-declaration" v-for="declaration_item in declaration_list" :key="declaration_item.key">
@@ -25,17 +25,19 @@
           :index="declaration_item.index"
         />
       </div>
-      <div class="mypage-declaration" v-for="support_item in support_list" :key="support_item.key">
+      <div class="mypage-declaration">
         <h3>応援している宣言</h3>
-        <Sengen 
-          :tag="support_item.tag" 
-          :name="support_item.name"
-          :hasp="support_item.hasp"
-          :thumbnail="support_item.thumbnail"
-          :supporters="support_item.supporters" 
-          :deadline="support_item.deadline" 
-          :index="support_item.index"
-        />
+        <div v-for="support_item in support_list" :key="support_item.key">
+          <Sengen 
+            :tag="support_item.tag" 
+            :name="support_item.name"
+            :hasp="support_item.hasp"
+            :thumbnail="support_item.thumbnail"
+            :supporters="support_item.supporters" 
+            :deadline="support_item.deadline" 
+            :index="support_item.index"
+          />
+        </div>
       </div>
     </div>
   </div>
@@ -79,6 +81,7 @@ export default {
         overview: '今独学でWeb開発の勉強をしているのですが、作りたいWebサービスを思いつきました！自分が成し遂げたことを「実績解除」という形でSNSに共有できるWebサービスです！これを3月末までに作りたいと思います！'
       },
       declaration_list: [],
+      support_list: [],
       support_item: {
         tag: 'Web開発',
         name: 'これは応援している方の宣言です！',
@@ -139,6 +142,10 @@ h3 {
   padding: 30px 0;
   font-size: 1.3rem;
   border-top: 1px solid #F9F9F9;
+}
+
+.mypage-settings li:hover {
+  cursor : pointer;
 }
 
 .mypage-declaration {
