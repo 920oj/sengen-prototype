@@ -62,28 +62,31 @@ router.get('/testdeclaration', function(req, res, next) {
 })
 
 router.get('/testcategory', function(req, res, next) {
-    first(
-        second(
-            third(
-                fourth(
-                    fifth(
-                        sixth(
-
-                        )
-                    )
-                )
-            )
-        )
-    )
+    // クソコード注意！
+    addCategory(0, 'アート');
+    addCategory(1, 'プロダクト');
+    addCategory(2, 'テクノロジー');
+    addCategory(3, '音楽');
+    addCategory(4, 'ゲーム');
+    addCategory(5, '書籍');
+    addCategory(6, '映像');
+    addCategory(7, 'スポーツ');
+    addCategory(8, 'ビジネス');
+    addCategory(9, 'ファッション');
+    addCategory(10, 'アニメ');
+    addCategory(11, '飲食');
+    addCategory(12, 'ヘルスケア');
+    addCategory(13, 'その他')
+    
     res.send();
 
-    function first() {
+    function addCategory(c_uid, c_name) {
         let newCategory = new Category({
-            uid: 0,
-            name: 'アート',
+            uid: c_uid,
+            name: c_name,
             declarations: []
         });
-        
+
         newCategory.save(function(err) {
             if(err) {
                 console.log(err);
@@ -92,80 +95,6 @@ router.get('/testcategory', function(req, res, next) {
         })
     }
 
-    function second() {
-        let newCategory = new Category({
-            uid: 1,
-            name: 'プロダクト',
-            declarations: []
-        });
-    
-        newCategory.save(function(err) {
-            if(err) {
-                console.log(err);
-            }
-            dataCheck(Category);
-        })
-    }
-
-    function third() {
-        let newCategory = new Category({
-            uid: 2,
-            name: 'テクノロジー',
-            declarations: []
-        });
-    
-        newCategory.save(function(err) {
-            if(err) {
-                console.log(err);
-            }
-            dataCheck(Category);
-        })
-    }
-
-    function fourth() {
-        let newCategory = new Category({
-            uid: 3,
-            name: '音楽',
-            declarations: []
-        });
-    
-        newCategory.save(function(err) {
-            if(err) {
-                console.log(err);
-            }
-            dataCheck(Category);
-        })
-    }
-
-    function fifth() {
-        let newCategory = new Category({
-            uid: 4,
-            name: 'ゲーム',
-            declarations: []
-        });
-    
-        newCategory.save(function(err) {
-            if(err) {
-                console.log(err);
-            }
-            dataCheck(Category);
-        })
-    }
-
-    function sixth() {
-        let newCategory = new Category({
-            uid: 5,
-            name: '書籍',
-            declarations: []
-        });
-    
-        newCategory.save(function(err) {
-            if(err) {
-                console.log(err);
-            }
-            dataCheck(Category);
-        })
-    }
 });
 
 router.get('/token', function(req, res, next) {
