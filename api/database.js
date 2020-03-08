@@ -8,7 +8,7 @@ let User = new Schema({
     point: Number,
     thumbnail: String,
     declarations: [{ type: Schema.Types.ObjectId, ref: 'Declaration' }],
-    supports: [{ type: String, ref: 'Declaration' }]
+    supports: [{ type: Schema.Types.ObjectId, ref: 'Declaration' }]
 });
 
 let Declaration = new Schema({

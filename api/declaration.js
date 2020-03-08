@@ -293,7 +293,40 @@ router.post('/declarations/:declaration/support/message', function(req, res, nex
 
 //応援ボタン押下
 router.post('/declarations/:declaration/support', function(req, res, next) {
-
+    let receiveComment = req.body.comment,
+        receiveIndex = req.params.declaration,
+        receiveMail = req.body.mail;
+    
+        Declaration.findOne({ index: receiveIndex })
+        .populate('supporters')
+        .exec( function(err, declaration) {
+            User.findOne({ mail: receiveMail })
+            .populate('supports')
+            .exec( function(err, user) {
+                let newSupporter = {}
+                newSupporter.detail = user._id,
+                newSupporter.name = user.name,
+                newSupporter.thumbnail = '/_nuxt/client/assets/img/png/ogp.png',
+                newSupporter.timestamp = Date.now(),
+                newSupporter.comment = receiveComment
+                declaration.supporters.push(newSupporter);
+                declaration.save(function(err) {
+                    if(err) {
+                        console.log(err);
+                    }
+                })
+                console.log(user)
+                user.supports.push(declaration._id);
+                user.save(function(err) {
+                    if(err) {
+                        console.log(err);
+                    }
+                })
+            })
+        })
+        Declaration.findOne({ index: receiveIndex }, function(err, result) {
+            res.send(result);
+        })
 });
 
 module.exports = router
