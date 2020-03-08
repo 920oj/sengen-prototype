@@ -14,7 +14,7 @@
       <ul>
         <li class="header-menu-elem" @click="jumpTo('/')">トップ</li>
         <li class="header-menu-elem" v-if="!isAuthenticated" @click="jumpTo('/login')">ログイン</li>
-        <li class="header-menu-elem" v-if="isAuthenticated" >宣言する</li>
+        <li class="header-menu-elem" v-if="isAuthenticated" @click="jumpTo('/declaration')" >宣言する</li>
         <li class="header-menu-elem" v-if="isAuthenticated" @click="jumpTo('/mypage')">マイページ</li>
         <li class="header-menu-elem" v-if="isAuthenticated" @click="jumpTo('/purchase')">ポイント購入</li>
         <li class="header-menu-elem" v-if="isAuthenticated" @click="logout()">ログアウト</li>
@@ -106,6 +106,10 @@ export default {
 
   color: #fff;
   background: #F27435;
+}
+
+.header-logo {
+  cursor: pointer;
 }
 
 .header-logo, .header-menu-bar {

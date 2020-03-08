@@ -8,6 +8,7 @@
         :thumbnail="item.thumbnail"
         :supporters="item.supporters" 
         :deadline="item.deadline" 
+        :index="item.index"
       />
 
       <div class="declarations-overview">
@@ -79,6 +80,7 @@ export default {
         supporters: '380',
         deadline: '2020-03-27',
         overview: '今独学でWeb開発の勉強をしているのですが、作りたいWebサービスを思いつきました！自分が成し遂げたことを「実績解除」という形でSNSに共有できるWebサービスです！これを3月末までに作りたいと思います！',
+        index: 99999,
       },
       comment: '',
       status: 'notLogin', // 非ログイン: notLogin, 宣言者: declarator, 応援者: supporter, 非応援者: login
