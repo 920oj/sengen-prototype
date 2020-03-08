@@ -49,9 +49,14 @@
 
       <div class="declarations-comment">
         <h2>応援コメント</h2>
-        <Comment />
-        <Comment />
-        <Comment />
+        <div v-for="supporter_item in supporter_list" :key="supporter_item.id">
+          <Comment 
+            :name="supporter_item.name"
+            :timestamp="supporter_item.timestamp"
+            :comment="supporter_item.comment"
+            :thumbnail="supporter_item.thumbnail"
+          />
+        </div>
       </div>
 
     </div>
@@ -84,6 +89,7 @@ export default {
       },
       comment: '',
       status: 'notLogin', // 非ログイン: notLogin, 宣言者: declarator, 応援者: supporter, 非応援者: login
+      supporter_list: ''
     }
   },
   mounted () {
@@ -128,6 +134,7 @@ export default {
                   break
               }
               this.item = result.data
+              this.supporter_list = result.data.supporters
               console.log(result.data.status)
             })
       } else {
