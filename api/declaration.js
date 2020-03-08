@@ -133,6 +133,9 @@ router.post('/declarations', function(req, res, next) {
             User.findOne({ mail: result.mail}, function(err, user) {
                 Declaration.findOne({ index: length }, function(err, declara) {
                     result.declarations.push(declara._id)
+                    // console.log('result.pointのタイプは' + typeof(result.point))
+                    // console.log('haspのタイプは' + typeof(hasp))
+                    result.point -= Number(hasp)
                     result.save(function(err) {
                         res.send();
                     })
