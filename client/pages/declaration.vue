@@ -20,30 +20,24 @@
             <p>カテゴリー <span class="required-ast">&lowast;</span> </p>
           </div>
           <div class="declaration-form">
-            <input v-show="checkBefore" type="text" name="category" class="text-form" v-model="category">
+            <!-- <input v-show="checkBefore" type="text" name="category" class="text-form" v-model="category"> -->
+            <select v-show="checkBefore" v-model="category" class="declaration-category">
+              <option value="0">アート</option>
+              <option value="1">プロダクト</option>
+              <option value="2">テクノロジー</option>
+              <option value="3">音楽</option>
+              <option value="4">ゲーム</option>
+              <option value="5">書籍</option>
+              <option value="6">映像</option>
+              <option value="7">スポーツ</option>
+              <option value="8">ビジネス</option>
+              <option value="9">ファッション</option>
+              <option value="10">アニメ</option>
+              <option value="11">飲食</option>
+              <option value="12">ヘルスケア</option>
+              <option value="13">その他</option>
+            </select>
             <p v-show="!checkBefore">{{ category }}</p>
-            <!-- 選ぶやつに変更する -->
-            <!-- <ul class="category-menu">
-              <li class="menu-single">
-                <a class="init-bottom">カテゴリーを選択</a>
-                <ul class="menu-dropdown">
-                  <li><p>アート</p></li>
-                  <li><p>プロダクト</p></li>
-                  <li><p>テクノロジー</p></li>
-                  <li><p>音楽</p></li>
-                  <li><p>ゲーム</p></li>
-                  <li><p>書籍</p></li>
-                  <li><p>映像</p></li>
-                  <li><p>スポーツ</p></li>
-                  <li><p>ビジネス</p></li>
-                  <li><p>ファッション</p></li>
-                  <li><p>アニメ</p></li>
-                  <li><p>飲食</p></li>
-                  <li><p>ヘルスケア</p></li>
-                  <li><p>その他</p></li>
-                </ul>
-              </li>
-            </ul> -->
           </div>
         </div>
 
@@ -269,6 +263,13 @@ export default {
 .required-ast {
   color: #F27435;
   font-weight: 900;
+}
+
+.declaration-category {
+  width: 100%;
+  height: 2rem;
+  border: 1px solid #F8F8F8;
+  font-family: 'Roboto', 'Noto Sans JP';
 }
 
 #point-form {
