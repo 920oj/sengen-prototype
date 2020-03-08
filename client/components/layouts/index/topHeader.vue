@@ -21,6 +21,9 @@
       <div class="top-header-btn" @click="$router.push('/register')" v-if="!isAuthenticated">
         <btnWithIcon title="新規登録" icon="img/icon/user-plus.svg" />
       </div>
+      <div class="top-header-btn" @click="$router.push('/declaration')" v-if="isAuthenticated">
+        <btnWithIcon title="宣言する！" icon="img/icon/user-plus.svg" />
+      </div>
     </div>
 
   </div>
