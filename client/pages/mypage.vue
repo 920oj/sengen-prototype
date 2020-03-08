@@ -48,6 +48,11 @@ import Sengen from '~/components/layouts/common/sengen.vue'
 import querystring from 'querystring'
 
 export default {
+  head() {
+    return  {
+      title: 'マイページ | sengen.jp ― 世界初「逆」クラウドファンディングサービス',
+    }
+  },
   components: {
     Sengen,
   },

@@ -70,6 +70,11 @@ import { mapActions, mapState, mapGetters } from 'vuex'
 import querystring from 'querystring'
 
 export default {
+  head() {
+    return  {
+      title: this.item.name + ' | sengen.jp ― 世界初「逆」クラウドファンディングサービス',
+    }
+  },
   components: {
     Sengen,
     Comment,

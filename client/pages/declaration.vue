@@ -121,6 +121,11 @@ moment.tz.setDefault('Asia/Tokyo')
 moment.locale('ja')
 
 export default {
+  head() {
+    return  {
+      title: '新規宣言作成 | sengen.jp ― 世界初「逆」クラウドファンディングサービス',
+    }
+  },
   components: {
     btnOnlyTitle,
   },

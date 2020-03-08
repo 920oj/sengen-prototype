@@ -14,6 +14,11 @@ import Header from '~/components/layouts/index/topHeader.vue'
 import Sengenarea from '~/components/layouts/index/topSengen.vue'
 
 export default {
+  head() {
+    return  {
+      title: 'sengen.jp ― 世界初「逆」クラウドファンディングサービス',
+    }
+  },
   layout: 'onlyFooter',
   components: {
     Header,

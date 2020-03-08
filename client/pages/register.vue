@@ -44,6 +44,11 @@ import { mapActions, mapState, mapGetters } from 'vuex'
 import querystring from 'querystring'
 
 export default {
+  head() {
+    return  {
+      title: '新規登録 | sengen.jp ― 世界初「逆」クラウドファンディングサービス'
+    }
+  },
   components: {
     btnWithIcon,
   },

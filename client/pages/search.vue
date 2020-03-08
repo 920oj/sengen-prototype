@@ -16,6 +16,11 @@ import SearchBar from '~/components/ui/bar/searchbarSeparation.vue'
 import SengenArea from '~/components/layouts/index/topSengen.vue'
 
 export default {
+    head() {
+        return  {
+            title: '検索 | sengen.jp ― 世界初「逆」クラウドファンディングサービス'
+        }
+    },
     components: {
         SearchBar,
         SengenArea

@@ -37,6 +37,11 @@ import firebase from '~/plugins/firebase'
 import { mapActions, mapState, mapGetters } from 'vuex'
 
 export default {
+  head() {
+    return  {
+      title: 'ログイン | sengen.jp ― 世界初「逆」クラウドファンディングサービス'
+    }
+  },
   components: {
     btnWithIcon,
   },

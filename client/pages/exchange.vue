@@ -27,6 +27,11 @@
 import querystring from 'querystring'
 
 export default {
+  head() {
+    return {
+      title: 'ポイント変換 | sengen.jp ― 世界初「逆」クラウドファンディングサービス'
+    }
+  },
   data() {
     return {
       'point': 0,
