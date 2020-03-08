@@ -35,7 +35,7 @@
         <p>シェアして応援しよう！</p>
       </div>
 
-      <div class="declarations-support-btn-wrapper" v-if="status == 'declarator'">
+      <div class="declarations-support-btn-wrapper" v-if="status == 'declarer'">
         <p>期限までに完了報告をしましょう！</p>
         <div class="declarations-support-btn">
           完了報告

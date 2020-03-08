@@ -209,14 +209,15 @@ router.post('/declarations/:declaration', function(req, res, next) {
     Declaration.findOne({ index: declarationIndex })
         .populate('declarer')
         .exec( function(err, result) {
-            console.log('1' + result.declarer._id)
+            console.log('1' + result)
             User.findOne({ mail: req.body.mail }, function(err, user) {
                 if(err) {
                     console.log(err);
                 }
-                console.log(user._id)
-                console.log(typeof(result.declarer._id))
-                if(user._id == result.declarer._id) {
+                console.log(JSON.stringify(user._id))
+                console.log(JSON.stringify(result.declarer._id))
+                if(JSON.stringify(user._id) == JSON.stringify(result.declarer._id)) {
+                // if(user._id == result.declarer._id) {
                     let updateData = result.toObject();
                     updateData.declarer.uid = null;
                     updateData.declarer.mail = null;
