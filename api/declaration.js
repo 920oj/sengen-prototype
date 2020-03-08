@@ -209,14 +209,14 @@ router.post('/declarations/:declaration', function(req, res, next) {
     Declaration.findOne({ index: declarationIndex })
         .populate('declarer')
         .exec( function(err, result) {
-
+            console.log('1' + result.declarer._id)
             User.findOne({ mail: req.body.mail }, function(err, user) {
                 if(err) {
                     console.log(err);
                 }
                 console.log(user._id)
                 console.log(typeof(result.declarer._id))
-                if(toString(user._id) === toString(result.declarer._id)) {
+                if(user._id == result.declarer._id) {
                     let updateData = result.toObject();
                     updateData.declarer.uid = null;
                     updateData.declarer.mail = null;
@@ -224,6 +224,9 @@ router.post('/declarations/:declaration', function(req, res, next) {
                     updateData.declarer.supports = null;
                     updateData.status = 'declarer';
                     res.send(updateData);
+                    console.log(toString(user._id))
+                    console.log(toString(result.declarer._id))
+                    console.log('いいか？お前はdeclarerだ')
                 } else {
                     User.findOne({ supports: result._id }, function(err, supportUser) {
                         let updateData = result.toObject();
@@ -231,16 +234,17 @@ router.post('/declarations/:declaration', function(req, res, next) {
                         updateData.declarer.mail = null;
                         updateData.declarer.point = null;
                         updateData.declarer.supports = null;
-                        updateData.status = 'declarer';
                         if(err) {
                             console.log(err);
                         }
                         if(supportUser) {
                             updateData.status = 'supporter';
+                            console.log('いいか？お前はsupporterだ')
                         } else {
                             updateData.status = 'login'
                             updateData['status'] = 'login'
                             console.log(typeof(updateData))
+                            console.log('いいか？お前はloginだ')
                         }
                         res.send(updateData);
                     });
