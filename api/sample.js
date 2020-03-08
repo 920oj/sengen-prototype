@@ -62,22 +62,27 @@ router.get('/testdeclaration', function(req, res, next) {
 })
 
 router.get('/testcategory', function(req, res, next) {
-    // クソコード注意！
-    addCategory(0, 'アート');
-    addCategory(1, 'プロダクト');
-    addCategory(2, 'テクノロジー');
-    addCategory(3, '音楽');
-    addCategory(4, 'ゲーム');
-    addCategory(5, '書籍');
-    addCategory(6, '映像');
-    addCategory(7, 'スポーツ');
-    addCategory(8, 'ビジネス');
-    addCategory(9, 'ファッション');
-    addCategory(10, 'アニメ');
-    addCategory(11, '飲食');
-    addCategory(12, 'ヘルスケア');
-    addCategory(13, 'その他')
-    
+    const category_list = [
+        [0, 'アート'],
+        [1, 'プロダクト'],
+        [2, 'テクノロジー'],
+        [3, '音楽'],
+        [4, 'ゲーム'],
+        [5, '書籍'],
+        [6, '映像'],
+        [7, 'スポーツ'],
+        [8, 'ビジネス'],
+        [9, 'ファッション'],
+        [10, 'アニメ'],
+        [11, '飲食'],
+        [12, 'ヘルスケア'],
+        [13, 'その他'],
+    ]
+
+    category_list.forEach((item) => {
+        addCategory(item[0], item[1]);
+    })
+
     res.send();
 
     function addCategory(c_uid, c_name) {
