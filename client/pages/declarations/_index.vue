@@ -24,8 +24,8 @@
 
       <div class="declarations-support-btn-wrapper" v-if="status == 'login'">
         <p>この宣言を応援する！</p>
-        <textarea class="declarations-support-message" cols="30" rows="10" placeholder="応援メッセージをここに入力"></textarea>
-        <div class="declarations-support-btn">
+        <textarea class="declarations-support-message" cols="30" rows="10" placeholder="応援メッセージをここに入力" v-model="comment"></textarea>
+        <div class="declarations-support-btn" @click="supportIn()">
           応援！
         </div>
       </div>
@@ -78,8 +78,9 @@ export default {
         thumbnail: 'https://i.imgur.com/0OHpVwi.jpg',
         supporters: '380',
         deadline: '2020-03-27',
-        overview: '今独学でWeb開発の勉強をしているのですが、作りたいWebサービスを思いつきました！自分が成し遂げたことを「実績解除」という形でSNSに共有できるWebサービスです！これを3月末までに作りたいと思います！'
+        overview: '今独学でWeb開発の勉強をしているのですが、作りたいWebサービスを思いつきました！自分が成し遂げたことを「実績解除」という形でSNSに共有できるWebサービスです！これを3月末までに作りたいと思います！',
       },
+      comment: '',
       status: 'notLogin', // 非ログイン: notLogin, 宣言者: declarator, 応援者: supporter, 非応援者: login
     }
   },
@@ -110,14 +111,17 @@ export default {
               switch(result.data.status) {
                 case 'declarer':
                   this.status = 'declarer'
+                  console.log(result.data)
                   console.log(this.status)
                   break
                 case 'supporter':
                   this.status = 'supporter'
+                  console.log(result.data)
                   console.log(this.status)
                   break
                 default:
                   this.status = 'login'
+                  console.log(result.data)
                   console.log(this.status)
                   break
               }
@@ -130,6 +134,25 @@ export default {
         // else if・その宣言を応援している人　→　user_data.supports に this.$route.params.index がある　→　this.statusをsupporterに変更する
         // else・その宣言を応援していない人　→　上記以外　→　this.statusをloginに変更する
       
+    },
+    supportIn: function() {
+      let localUserData = JSON.parse(localStorage.vuex),
+          userMail = localUserData.auth.login.user.email
+      console.log(this.comment)
+      let path = this.$route.params.index
+
+      this.$axios
+          .$post(`/api/declarations/${path}/support`,
+            querystring.stringify({
+              comment: this.comment,
+              mail: userMail
+            }))
+            .then(result => {
+              console.log(result)
+              console.log('result' + result.index);
+              this.$router.go({path: this.$router.currentRoute.path, force: true})
+              // this.$router.push(`${result.index}`)
+            })
     }
   }
 }

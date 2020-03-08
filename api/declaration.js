@@ -209,14 +209,14 @@ router.post('/declarations/:declaration', function(req, res, next) {
     Declaration.findOne({ index: declarationIndex })
         .populate('declarer')
         .exec( function(err, result) {
-
+            console.log('1' + result.declarer._id)
             User.findOne({ mail: req.body.mail }, function(err, user) {
                 if(err) {
                     console.log(err);
                 }
                 console.log(user._id)
                 console.log(typeof(result.declarer._id))
-                if(toString(user._id) === toString(result.declarer._id)) {
+                if(user._id == result.declarer._id) {
                     let updateData = result.toObject();
                     updateData.declarer.uid = null;
                     updateData.declarer.mail = null;
@@ -224,6 +224,9 @@ router.post('/declarations/:declaration', function(req, res, next) {
                     updateData.declarer.supports = null;
                     updateData.status = 'declarer';
                     res.send(updateData);
+                    console.log(toString(user._id))
+                    console.log(toString(result.declarer._id))
+                    console.log('いいか？お前はdeclarerだ')
                 } else {
                     User.findOne({ supports: result._id }, function(err, supportUser) {
                         let updateData = result.toObject();
@@ -231,16 +234,17 @@ router.post('/declarations/:declaration', function(req, res, next) {
                         updateData.declarer.mail = null;
                         updateData.declarer.point = null;
                         updateData.declarer.supports = null;
-                        updateData.status = 'declarer';
                         if(err) {
                             console.log(err);
                         }
                         if(supportUser) {
                             updateData.status = 'supporter';
+                            console.log('いいか？お前はsupporterだ')
                         } else {
                             updateData.status = 'login'
                             updateData['status'] = 'login'
                             console.log(typeof(updateData))
+                            console.log('いいか？お前はloginだ')
                         }
                         res.send(updateData);
                     });
@@ -289,7 +293,40 @@ router.post('/declarations/:declaration/support/message', function(req, res, nex
 
 //応援ボタン押下
 router.post('/declarations/:declaration/support', function(req, res, next) {
-
+    let receiveComment = req.body.comment,
+        receiveIndex = req.params.declaration,
+        receiveMail = req.body.mail;
+    
+        Declaration.findOne({ index: receiveIndex })
+        .populate('supporters')
+        .exec( function(err, declaration) {
+            User.findOne({ mail: receiveMail })
+            .populate('supports')
+            .exec( function(err, user) {
+                let newSupporter = {}
+                newSupporter.detail = user._id,
+                newSupporter.name = user.name,
+                newSupporter.thumbnail = '/_nuxt/client/assets/img/png/ogp.png',
+                newSupporter.timestamp = Date.now(),
+                newSupporter.comment = receiveComment
+                declaration.supporters.push(newSupporter);
+                declaration.save(function(err) {
+                    if(err) {
+                        console.log(err);
+                    }
+                })
+                console.log(user)
+                user.supports.push(declaration._id);
+                user.save(function(err) {
+                    if(err) {
+                        console.log(err);
+                    }
+                })
+            })
+        })
+        Declaration.findOne({ index: receiveIndex }, function(err, result) {
+            res.send(result);
+        })
 });
 
 module.exports = router
