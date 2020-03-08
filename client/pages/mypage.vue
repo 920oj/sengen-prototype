@@ -24,7 +24,7 @@
           :deadline="declaration_item.deadline" 
         />
       </div>
-      <div class="mypage-declaration">
+      <div class="mypage-declaration" v-for="support_item in support_list" :key="support_item.key">
         <h3>応援している宣言</h3>
         <Sengen 
           :tag="support_item.tag" 
@@ -50,7 +50,6 @@ export default {
   mounted() {
     let localUserData = JSON.parse(localStorage.vuex),
         userMail = localUserData.auth.login.user.email
-    console.log(localUserData.auth.login.user)
       this.$axios
           .$post(`/api/user`,
             querystring.stringify({
@@ -59,6 +58,8 @@ export default {
           .then(result => {
             this.username = result.name
             this.declaration_list = result.declarations
+            this.support_list = result.supports
+            console.log(result)
             console.log(this.declaration_list)
           })
     console.log(userMail)
