@@ -63,6 +63,7 @@
           <p>終了日 <span class="required-ast">&lowast;</span></p>
           <client-only v-show="checkBefore">
             <date-picker class="datepicker-wrapper" 
+              :disabled-dates="dpDisabledDates"
               :language="dpLocale"
               :format="dpFormat"
               placeholder="日付を選択"
@@ -119,6 +120,9 @@ export default {
   },
   data() {
     return {
+      dpDisabledDates: {
+        to: new Date(),
+      },
       dpFormat: 'yyyy/M/d(D)',
       dpLocale: ja,
       title: '',
