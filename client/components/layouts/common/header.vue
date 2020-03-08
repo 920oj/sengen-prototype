@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import searchBar from '~/components/ui/bar/searchBar.vue'
+import searchBar from '~/components/ui/bar/searchbar.vue'
 import firebase from '~/plugins/firebase'
 import { mapActions, mapState, mapGetters } from 'vuex'
 
