@@ -51,7 +51,13 @@ export default {
   },
   methods: {
     judgeStyle: function() {
-      if(this.max == 1) {
+      if(this.max == 0) {
+        this.one_only = false;
+        this.right_only = false;
+        this.common = false;
+        this.left_only = false;
+      }
+      else if(this.max == 1) {
         this.one_only = true;
         this.right_only = false;
         this.common = false;
