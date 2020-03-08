@@ -81,13 +81,13 @@
             <div class="point-btn" @click="resetPoint()">
               <p>リセット</p>
             </div>
-            <div class="point-btn" @click="countPoint1000()">
+            <div class="point-btn" @click="increasePoint(1000)">
               <p>+1000</p>
             </div>
-            <div class="point-btn" @click="countPoint5000()">
+            <div class="point-btn" @click="increasePoint(5000)">
               <p>+5000</p>
             </div>
-            <div class="point-btn" @click="countPoint10000()">
+            <div class="point-btn" @click="increasePoint(10000)">
               <p>+10000</p>
             </div>
           </div>
@@ -154,14 +154,8 @@ export default {
     resetPoint: function() {
       this.hasp = 0
     },
-    countPoint1000: function() {
-      this.hasp += 1000
-    },
-    countPoint5000: function() {
-      this.hasp += 5000
-    },
-    countPoint10000: function() {
-      this.hasp += 10000
+    increasePoint: function(p) {
+      this.hasp += p
     },
     checkForm: function() {
       this.postDeadLine = this.dateToString(this.deadline)
